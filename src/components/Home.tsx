@@ -1,10 +1,10 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, FC } from 'react';
 
 /* function Home() {
   return <h1>Hello World</h1>;
 } */
 
-const Home: React.FC = () => {
+const Home: FC = () => {
   const [value, setValue] = useState('');
 
   return (
