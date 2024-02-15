@@ -4,7 +4,8 @@ import "./SearchBar.css";
 
 interface ApiResData {
   count: number;
-  next: 
+  next: string;
+  
 }
 
 export const SearchBar: FC = () => {
@@ -14,10 +15,10 @@ export const SearchBar: FC = () => {
     fetch(`https://swapi.dev/api/people/?search=${value}`)
       .then((resp) => resp.json())
       .then((json) => {
-        const results = json.filter((person) => {
+        /* const results = json.filter((person) => {
           return value && person;
-        });
-        console.log(results);
+        }); */
+        console.log(json);
       });
   };
 
