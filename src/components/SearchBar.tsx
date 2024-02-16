@@ -1,12 +1,7 @@
 import { FC, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import "./SearchBar.css";
-
-interface ApiResData {
-  count: number;
-  next: string;
-  
-}
+import { ApiResData } from "../types/data";
 
 export const SearchBar: FC = () => {
   const [input, setInput] = useState("");
@@ -15,10 +10,10 @@ export const SearchBar: FC = () => {
     fetch(`https://swapi.dev/api/people/?search=${value}`)
       .then((resp) => resp.json())
       .then((json) => {
-        /* const results = json.filter((person) => {
+        const results = json.filter((person: ApiResData) => {
           return value && person;
-        }); */
-        console.log(json);
+        });
+        console.log(results);
       });
   };
 

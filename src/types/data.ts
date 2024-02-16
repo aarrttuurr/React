@@ -1,3 +1,12 @@
+export interface ApiResData {
+  count: number;
+  next: string;
+  previous: string;
+  results: Entity;
+}
+
+enum Entity {IFilm, IPeople, IPlanet, ISpecie, IStarship, IVehicle};
+
 export interface IFilm {
   characters: string[] | IPeople[];
   created: Date;
