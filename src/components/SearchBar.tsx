@@ -9,8 +9,8 @@ export const SearchBar: FC = () => {
   const fetchData = (value: string) => {
     fetch(`https://swapi.dev/api/people/?search=${value}`)
       .then((resp) => resp.json())
-      .then((json) => {
-        const results = json.filter((person: ApiResData) => {
+      .then((json: ApiResData) => {
+        const results = json.results.filter((person: ApiResData) => {
           return value && person;
         });
         console.log(results);

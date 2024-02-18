@@ -5,7 +5,14 @@ export interface ApiResData {
   results: Entity;
 }
 
-enum Entity {IFilm, IPeople, IPlanet, ISpecie, IStarship, IVehicle};
+enum Entity {
+  IFilmArr,
+  IPeopleArr,
+  IPlanetArr,
+  ISpecieArr,
+  IStarshipArr,
+  IVehicleArr,
+}
 
 export interface IFilm {
   characters: string[] | IPeople[];
