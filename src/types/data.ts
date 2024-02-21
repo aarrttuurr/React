@@ -2,16 +2,16 @@ export interface ApiResData {
   count: number;
   next: string;
   previous: string;
-  results: Entity;
+  results: IFilm[] | IPeople[] | IPlanet | ISpecie | IStarship | IVehicle;
 }
 
-enum Entity {
-  IFilmArr,
-  IPeopleArr,
-  IPlanetArr,
-  ISpecieArr,
-  IStarshipArr,
-  IVehicleArr,
+export enum ResourcesType {
+  Films = 'films',
+  People = 'people',
+  Planets = 'planets',
+  Species = 'species',
+  Starships = 'starships',
+  Vehicles = 'vehicles',
 }
 
 export interface IFilm {
