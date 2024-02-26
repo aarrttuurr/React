@@ -6,8 +6,8 @@ import { ApiResData, ResourcesType } from "../types/data";
 export const SearchBar: FC = () => {
   const [input, setInput] = useState("");
 
-  const fetchData = (value: string) => {
-    fetch(`https://swapi.dev/api/${}/?search=${value}`)
+  const fetchData = (type: ResourcesType, value: string) => {
+    fetch(`https://swapi.dev/api/${type}/?search=${value}`)
       .then((resp) => resp.json())
       .then((json: ApiResData) => {
         /* const results = json.results.filter((person: ApiResData) => {
@@ -19,7 +19,7 @@ export const SearchBar: FC = () => {
 
   const handleChange = (value: string) => {
     setInput(value);
-    fetchData(value);
+    fetchData(ResourcesType.Planets, value);
   };
 
   return (
