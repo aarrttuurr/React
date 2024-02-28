@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, FormEvent, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import "./SearchBar.css";
 import { ApiResData, ResourcesType } from "../types/data";
@@ -17,19 +17,24 @@ export const SearchBar: FC = () => {
       });
   };
 
-  const handleChange = (value: string) => {
-    setInput(value);
-    fetchData(ResourcesType.Planets, value);
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const form = event.target as HTMLFormElement;
+    const input = form.querySelector(".search-input") as HTMLInputElement;
+    setInput(input.value);
+    fetchData(ResourcesType.Planets, input.value);
   };
 
   return (
-    <div className="input-wrapper">
-      <FaSearch id="search-icon" />
+    <form className="search-form">
       <input
+        className="search-input"
         placeholder="Type to search..."
-        value={input}
-        onChange={(e) => handleChange(e.target.value)}
+        onSubmit={(e) => handleSubmit(e)}
       />
-    </div>
+      <button>
+        <FaSearch id="search-icon" />
+      </button>
+    </form>
   );
 };
