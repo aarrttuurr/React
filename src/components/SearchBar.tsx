@@ -4,7 +4,7 @@ import "./SearchBar.css";
 import { ApiResData, ResourcesType } from "../types/data";
 
 export const SearchBar: FC = () => {
-  const [found, setFound] = useState<ApiResData[]>([]);
+  const [found, setFound] = useState<ApiResData>();
   const [search, setSearch] = useState("");
 
   const searchForItems = async (
@@ -14,7 +14,7 @@ export const SearchBar: FC = () => {
     const result = await fetch(
       `https://swapi.dev/api/${type}/?search=${value}`
     );
-    return (await result.json()).results;
+    return await result.json();
   };
 
   useEffect(() => {
@@ -22,16 +22,9 @@ export const SearchBar: FC = () => {
       const query = encodeURIComponent(search);
       const response = await searchForItems(ResourcesType.Planets, query);
       setFound(response);
+      console.log(response);
     })();
   }, [search]);
-
-  /* const fetchData = (type: ResourcesType, value: string) => {
-    fetch(`https://swapi.dev/api/${type}/?search=${value}`)
-      .then((resp) => resp.json())
-      .then((json: ApiResData) => {
-        console.log(json);
-      });
-  }; */
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
