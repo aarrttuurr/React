@@ -3,8 +3,12 @@ import { FaSearch } from "react-icons/fa";
 import "./SearchBar.css";
 import { ApiResData, ResourcesType } from "../types/data";
 
-export const SearchBar: FC = () => {
-  const [found, setFound] = useState<ApiResData>();
+interface SetFoundProps {
+  setFound: ApiResData;
+}
+
+export const SearchBar: FC<SetFoundProps> = ({setFound}) => {
+  // const [found, setFound] = useState<ApiResData>();
   const [search, setSearch] = useState("");
 
   const searchForItems = async (
