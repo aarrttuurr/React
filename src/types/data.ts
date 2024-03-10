@@ -1,4 +1,4 @@
-export interface ApiResData {
+export interface ApiData {
   count: number;
   next: string;
   previous: string;
