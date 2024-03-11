@@ -17,7 +17,7 @@ export const SearchBar: FC<SetFoundProps> = ({ setFound }) => {
     value: string
   ): Promise<ApiData> => {
     const result = await fetch(
-      `https://swapi.dev/api/${type}/?search=${value}`
+      `https://swapi.py4e.com/api/${type}/?search=${value}`
     );
     return await result.json();
   };
