@@ -4,8 +4,8 @@ import "./SearchBar.css";
 import { ApiData, ResourcesType } from "../types/data";
 
 interface SetFoundProps {
-  found: ApiData;
-  setFound: (found: ApiData) => void;
+  // found: ApiData;
+  setFound: React.Dispatch<React.SetStateAction<ApiData>>;
 }
 
 export const SearchBar: FC<SetFoundProps> = ({ setFound }) => {

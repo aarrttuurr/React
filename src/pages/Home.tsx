@@ -3,13 +3,13 @@ import { SearchBar } from "../components/SearchBar";
 import { ApiData } from "../types/data";
 
 const Home: FC = () => {
-  const [results, setResults] = useState<ApiData[]>([]);
+  const [results, setResults] = useState<ApiData>({});
 
   return (
     <div className="app">
       <div className="search-bar-container">
         <SearchBar setFound={setResults} />
-        <div>SearchResults</div>
+        {results && results.length > 0 && <SearchResultsList results={results} />}
       </div>
     </div>
   );
