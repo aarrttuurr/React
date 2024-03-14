@@ -4,21 +4,15 @@ import "./SearchBar.css";
 import { ApiData, ResourcesType } from "../types/data";
 
 interface SetFoundProps {
-  // found: ApiData;
-  setFound: React.Dispatch<React.SetStateAction<ApiData>>;
+  setFound: React.Dispatch<React.SetStateAction<ApiData[]>>;
 }
 
-export const SearchBar: FC<SetFoundProps> = ({ setFound }) => {
+const SearchBar: FC<SetFoundProps> = ({ setFound }) => {
   // const [found, setFound] = useState<ApiResData>();
   const [search, setSearch] = useState("");
 
-  const searchForItems = async (
-    type: ResourcesType,
-    value: string
-  ): Promise<ApiData> => {
-    const result = await fetch(
-      `https://swapi.py4e.com/api/${type}/?search=${value}`
-    );
+  const searchForItems = async (type: ResourcesType, value: string): Promise<ApiData> => {
+    const result = await fetch(`https://swapi.py4e.com/api/${type}/?search=${value}`);
     return await result.json();
   };
 
@@ -26,7 +20,7 @@ export const SearchBar: FC<SetFoundProps> = ({ setFound }) => {
     (async () => {
       const query = encodeURIComponent(search);
       const response = await searchForItems(ResourcesType.Planets, query);
-      setFound(response);
+      setFound([response]);
       console.log(response);
     })();
   }, [search]);
@@ -48,3 +42,5 @@ export const SearchBar: FC<SetFoundProps> = ({ setFound }) => {
     </form>
   );
 };
+
+export default SearchBar;

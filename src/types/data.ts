@@ -2,13 +2,7 @@ export interface ApiData {
   count: number;
   next: string;
   previous: string;
-  results:
-    | IFilm[]
-    | IPeople[]
-    | IPlanet[]
-    | ISpecie[]
-    | IStarship[]
-    | IVehicle[];
+  results: IFilm[] | IPeople[] | IPlanet[] | ISpecie[] | IStarship[] | IVehicle[];
 }
 
 export enum ResourcesType {
