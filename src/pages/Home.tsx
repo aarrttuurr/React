@@ -1,5 +1,6 @@
 import { FC, useState } from "react";
 import SearchBar from "../components/SearchBar";
+import SearchResultsList from "../components/SearchResultList";
 import { ApiData } from "../types/data";
 
 const Home: FC = () => {
@@ -9,7 +10,7 @@ const Home: FC = () => {
     <div className="app">
       <div className="search-bar-container">
         <SearchBar setFound={setResults} />
-        {/* {results && results.length > 0 && <SearchResultsList results={results} />} */}
+        {results && results.length > 0 && <SearchResultsList data={results} />}
       </div>
     </div>
   );
