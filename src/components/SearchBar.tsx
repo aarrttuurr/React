@@ -4,7 +4,7 @@ import "./SearchBar.css";
 import { ApiData, ResourcesType } from "../types/data";
 
 interface SetFoundProps {
-  setFound: React.Dispatch<React.SetStateAction<ApiData[]>>;
+  setFound: React.Dispatch<React.SetStateAction<ApiData>>;
 }
 
 const SearchBar: FC<SetFoundProps> = ({ setFound }) => {
@@ -20,7 +20,7 @@ const SearchBar: FC<SetFoundProps> = ({ setFound }) => {
     (async () => {
       const query = encodeURIComponent(search);
       const response = await searchForItems(ResourcesType.Planets, query);
-      setFound([response]);
+      setFound(response);
       console.log(response);
     })();
   }, [search]);

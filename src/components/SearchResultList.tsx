@@ -1,11 +1,13 @@
-import { ApiData } from "../types/data";
+import { IFilm, IPeople, IPlanet, ISpecie, IStarship, IVehicle } from "../types/data";
 import SearchResult from "./SearchResult";
 
-const SearchResultsList = (props: { data: ApiData }) => {
+const SearchResultsList = (props: {
+  data: IFilm[] | IPeople[] | IPlanet[] | ISpecie[] | IStarship[] | IVehicle[];
+}) => {
   const { data } = props;
   return (
     <div className="results-list">
-      {data.results.map((result, id) => {
+      {data.map((result, id) => {
         return <SearchResult item={result} key={id} />;
       })}
     </div>
