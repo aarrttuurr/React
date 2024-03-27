@@ -19,7 +19,7 @@ const SearchBar: FC<SetFoundProps> = ({ setFound }) => {
   useEffect(() => {
     (async () => {
       const query = encodeURIComponent(search);
-      const response = await searchForItems(ResourcesType.Planets, query);
+      const response = await searchForItems(ResourcesType.Films, query);
       setFound(response);
       console.log(response);
     })();
@@ -30,7 +30,7 @@ const SearchBar: FC<SetFoundProps> = ({ setFound }) => {
     const form = event.target as HTMLFormElement;
     const input = form.querySelector(".search-input") as HTMLInputElement;
     setSearch(input.value);
-    input.value = "";
+    // input.value = "";
   };
 
   return (
