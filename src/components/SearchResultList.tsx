@@ -1,8 +1,9 @@
-import { IFilm, IPeople, IPlanet, ISpecie, IStarship, IVehicle } from "../types/data";
+import "./SearchResultList.css";
+import { ResEntity } from "../types/data";
 import SearchResult from "./SearchResult";
 
 const SearchResultsList = (props: {
-  data: IFilm[] | IPeople[] | IPlanet[] | ISpecie[] | IStarship[] | IVehicle[];
+  data: ResEntity[];
 }) => {
   const { data } = props;
   return (
