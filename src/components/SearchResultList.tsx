@@ -2,9 +2,7 @@ import "./SearchResultList.css";
 import { ResEntity } from "../types/data";
 import SearchResult from "./SearchResult";
 
-const SearchResultsList = (props: {
-  data: ResEntity[];
-}) => {
+const SearchResultsList = (props: { data: ResEntity[] }) => {
   const { data } = props;
   return (
     <div className="results-list">

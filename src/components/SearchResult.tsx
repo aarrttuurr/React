@@ -1,5 +1,5 @@
 import "./SearchResult.css";
-import { IFilm, IPeople, IPlanet, ISpecie, IStarship, IVehicle, ResEntity } from "../types/data";
+import { IFilm, IPeople, IPlanet, ISpecie, ResEntity } from "../types/data";
 
 const SearchResult = (props: { item: ResEntity }) => {
   const { item } = props;
@@ -20,29 +20,50 @@ const SearchResult = (props: { item: ResEntity }) => {
     return "classification" in value;
   };
 
-  const isStarship = (value: ResEntity): value is IStarship => {
+  /* const isStarship = (value: ResEntity): value is IStarship => {
     return "model" in value;
   };
 
   const isVehicle = (value: ResEntity): value is IVehicle => {
     return "model" in value;
-  };
+  }; */
 
   return (
     <div className="search-result">
       <div className="result-title"> {isFilm(item) ? item.title : item.name} </div>
       <ul className="result-perks">
         <li className="perk">
-          {isFilm(item) ? item.director : 
-            isPeople(item) ? item.birth_year :
-            isPlanet(item) ? item.diameter :
-            isSpecie(item) ? item.classification : item.model}
+          {isFilm(item)
+            ? item.episode_id
+            : isPeople(item)
+              ? item.gender
+              : isPlanet(item)
+                ? item.climate
+                : isSpecie(item)
+                  ? item.classification
+                  : item.manufacturer}
         </li>
         <li className="perk">
-          {isFilm(item) ? item.director : 
-              isPeople(item) ? item.birth_year :
-              isPlanet(item) ? item.diameter :
-              isSpecie(item) ? item.classification : item.model}
+          {isFilm(item)
+            ? item.release_date.toString()
+            : isPeople(item)
+              ? item.birth_year
+              : isPlanet(item)
+                ? item.population
+                : isSpecie(item)
+                  ? item.average_lifespan
+                  : item.model}
+        </li>
+        <li className="perk">
+          {isFilm(item)
+            ? item.director
+            : isPeople(item)
+              ? item.homeworld.toString()
+              : isPlanet(item)
+                ? item.population
+                : isSpecie(item)
+                  ? item.average_lifespan
+                  : item.model}
         </li>
       </ul>
     </div>
