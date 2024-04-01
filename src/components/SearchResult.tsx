@@ -33,15 +33,16 @@ const SearchResult = (props: { item: ResEntity }) => {
       <div className="result-title"> {isFilm(item) ? item.title : item.name} </div>
       <ul className="result-perks">
         <li className="perk">
-          {isFilm(item)
-            ? item.director
-            : isPeople(item)
-              ? item.birth_year
-              : isPlanet(item)
-                ? item.diameter
-                : isSpecie(item)
-                  ? item.classification
-                  : item.model}
+          {isFilm(item) ? item.director : 
+            isPeople(item) ? item.birth_year :
+            isPlanet(item) ? item.diameter :
+            isSpecie(item) ? item.classification : item.model}
+        </li>
+        <li className="perk">
+          {isFilm(item) ? item.director : 
+              isPeople(item) ? item.birth_year :
+              isPlanet(item) ? item.diameter :
+              isSpecie(item) ? item.classification : item.model}
         </li>
       </ul>
     </div>
