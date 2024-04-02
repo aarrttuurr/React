@@ -1,5 +1,10 @@
 import "./SearchResult.css";
-import { IFilm, IPeople, IPlanet, ISpecie, ResEntity } from "../types/data";
+import { ApiData, IFilm, IPeople, IPlanet, ISpecie, ResEntity } from "../types/data";
+
+const getItems = async (url: string): Promise<ResEntity> => {
+  const result = await fetch(url);
+  return await result.json();
+};
 
 const SearchResult = (props: { item: ResEntity }) => {
   const { item } = props;
@@ -54,17 +59,17 @@ const SearchResult = (props: { item: ResEntity }) => {
                   ? item.average_lifespan
                   : item.model}
         </li>
-        <li className="perk">
+        {/* <li className="perk">
           {isFilm(item)
             ? item.director
             : isPeople(item)
-              ? item.homeworld.toString()
+              ? getItems(item.homeworld).then(res => res.name)
               : isPlanet(item)
                 ? item.population
                 : isSpecie(item)
                   ? item.average_lifespan
                   : item.model}
-        </li>
+        </li> */}
       </ul>
     </div>
   );
