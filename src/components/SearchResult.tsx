@@ -71,15 +71,9 @@ const SearchResult = (props: { item: ResEntity }) => {
                   : item.passengers}
         </li>
         <li className="perk">
-          {isFilm(item)
-            ? item.director
-            : isPeople(item)
-              ? item.height
-              : isPlanet(item)
-                ? item.population
-                : isSpecie(item)
-                  ? item.average_height
-                  : item.passengers}
+          {isFilm(item) && item.characters.map((link) => {
+            if(isPeople(link))
+          }).join(', ')}
         </li>
       </ul>
     </div>
