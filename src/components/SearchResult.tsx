@@ -13,6 +13,10 @@ const SearchResult = (props: { item: ResEntity }) => {
     return "title" in value;
   };
 
+  /* function isFilm<T extends IFilm>(value: T) {
+    return "title" in value;
+  }; */
+
   const isPeople = (value: ResEntity): value is IPeople => {
     return "birth_year" in value;
   };
@@ -72,7 +76,7 @@ const SearchResult = (props: { item: ResEntity }) => {
         </li>
         <li className="perk">
           {isFilm(item) && item.characters.map((link) => {
-            if(isPeople(link))
+            if()
           }).join(', ')}
         </li>
       </ul>
