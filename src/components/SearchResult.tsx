@@ -1,7 +1,7 @@
 import "./SearchResult.css";
 import { ApiData, IFilm, IPeople, IPlanet, ISpecie, ResEntity } from "../types/data";
 
-const getItems = async (url: string) => {
+async function getItems<T>(url: string): Promise<T> {
   const result = await fetch(url);
   return await result.json();
 };
@@ -76,7 +76,9 @@ const SearchResult = (props: { item: ResEntity }) => {
         </li>
         <li className="perk">
           {isFilm(item) && item.characters.map((link) => {
-            if()
+            if (typeof link === "string") {
+              const nestResp = await getItems<IPeople>(link);
+            }
           }).join(', ')}
         </li>
       </ul>
