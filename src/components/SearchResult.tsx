@@ -42,11 +42,17 @@ const SearchResult = (props: { item: ResEntity }) => {
 
   useEffect(() => {
     (async () => {
-      const respArr = isFilm(item) && item.characters.map(url => {
-        const resp = 
-      })
+      const respArr = [];
+      isFilm(item) &&
+        item.characters.map(async (url) => {
+          if (typeof url === "string") {
+            const resp = await getItems<IPeople>(url);
+            respArr.push(resp);
+          }
+        });
+      setProperty(respArr);
     })();
-  }, [property])
+  }, [property]);
 
   return (
     <div className="search-result">
