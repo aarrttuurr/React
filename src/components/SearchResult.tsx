@@ -1,10 +1,6 @@
 import "./SearchResult.css";
+import { useState, useEffect } from "react";
 import { ApiData, IFilm, IPeople, IPlanet, ISpecie, ResEntity } from "../types/data";
-
-async function getItems<T>(url: string): Promise<T> {
-  const result = await fetch(url);
-  return await result.json();
-};
 
 const SearchResult = (props: { item: ResEntity }) => {
   const { item } = props;
@@ -36,6 +32,21 @@ const SearchResult = (props: { item: ResEntity }) => {
   const isVehicle = (value: ResEntity): value is IVehicle => {
     return "model" in value;
   }; */
+
+  const [property, setProperty] = useState([]);
+
+  async function getItems<T>(url: string): Promise<T> {
+    const result = await fetch(url);
+    return await result.json();
+  };
+
+  useEffect(() => {
+    (async () => {
+      const respArr = isFilm(item) && item.characters.map(url => {
+        const resp = 
+      })
+    })();
+  }, [property])
 
   return (
     <div className="search-result">
