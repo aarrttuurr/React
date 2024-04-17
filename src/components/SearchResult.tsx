@@ -33,7 +33,7 @@ const SearchResult = (props: { item: ResEntity }) => {
     return "model" in value;
   }; */
 
-  const [property, setProperty] = useState([]);
+  const [property, setProperty] = useState<string[]>([]);
 
   async function getItems<T>(url: string): Promise<T> {
     const result = await fetch(url);
@@ -42,15 +42,13 @@ const SearchResult = (props: { item: ResEntity }) => {
 
   useEffect(() => {
     (async () => {
-      const respArr = [];
-      isFilm(item) &&
-        item.characters.map(async (url) => {
-          if (typeof url === "string") {
-            const resp = await getItems<IPeople>(url);
-            respArr.push(resp);
-          }
+      if(isFilm(item)) {
+        const respArr = (item.characters as string[]).map(async (url) => {
+          const resp = await getItems<IPeople>(url);
+          return resp;
         });
-      setProperty(respArr);
+        setProperty(respArr);
+      }
     })();
   }, [property]);
 
