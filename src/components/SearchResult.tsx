@@ -33,20 +33,22 @@ const SearchResult = (props: { item: ResEntity }) => {
     return "model" in value;
   }; */
 
-  const [property, setProperty] = useState<string[]>([]);
+  const [property, setProperty] = useState<IPeople[]>([]);
 
   async function getItems<T>(url: string): Promise<T> {
     const result = await fetch(url);
     return await result.json();
-  };
+  }
 
   useEffect(() => {
     (async () => {
-      if(isFilm(item)) {
-        const respArr = (item.characters as string[]).map(async (url) => {
-          const resp = await getItems<IPeople>(url);
-          return resp;
-        });
+      if (isFilm(item)) {
+        const respArr = await Promise.all(
+          (item.characters as string[]).map(async (url) => {
+            const resp = await getItems<IPeople>(url);
+            return resp;
+          })
+        );
         setProperty(respArr);
       }
     })();
@@ -90,11 +92,13 @@ const SearchResult = (props: { item: ResEntity }) => {
                   : item.passengers}
         </li>
         <li className="perk">
-          {isFilm(item) && item.characters.map((link) => {
-            if (typeof link === "string") {
-              const nestResp = await getItems<IPeople>(link);
-            }
-          }).join(', ')}
+          {isFilm(item) &&
+            item.characters
+              .map((link) => {
+                if (typeof link === "string") {
+                }
+              })
+              .join(", ")}
         </li>
       </ul>
     </div>
