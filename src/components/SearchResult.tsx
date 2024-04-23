@@ -33,7 +33,7 @@ const SearchResult = (props: { item: ResEntity }) => {
     return "model" in value;
   }; */
 
-  const [nestedProp, setNestedProp] = useState<IPeople[] | ISpecie[``]>([]);
+  const [nestedProp, setNestedProp] = useState<IPeople[] | ISpecie[]>([]);
 
   async function getItems<T>(url: string): Promise<T> {
     const result = await fetch(url);
@@ -46,6 +46,12 @@ const SearchResult = (props: { item: ResEntity }) => {
         const respArr = await Promise.all(
           (item.characters as string[]).map(async (url) => {
             const resp = await getItems<IPeople>(url);
+            return resp;
+          })
+        );
+        const respArrStarships = await Promise.all(
+          (item.starships as string[]).map(async (url) => {
+            const resp = await getItems<IStarship>(url);
             return resp;
           })
         );
@@ -93,9 +99,6 @@ const SearchResult = (props: { item: ResEntity }) => {
         </li>
         <li className="perk">
           {isFilm(item) && nestedProp.map(person => person.name).join(", ")}
-        </li>
-        <li className="perk">
-          {isFilm(item) && nestedProp.map(specie => specie.name).join(", ")}
         </li>
       </ul>
     </div>
