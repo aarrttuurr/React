@@ -1,6 +1,6 @@
 import "./SearchResult.css";
 import { useState, useEffect } from "react";
-import { ApiData, IFilm, IPeople, IPlanet, ISpecie, ResEntity, IStarship } from "../types/data";
+import { ApiData, IFilm, IPeople, IPlanet, ISpecie, ResEntity, IStarship, IVehicle } from "../types/data";
 
 const SearchResult = (props: { item: ResEntity }) => {
   const { item } = props;
@@ -8,10 +8,6 @@ const SearchResult = (props: { item: ResEntity }) => {
   const isFilm = (value: ResEntity): value is IFilm => {
     return "title" in value;
   };
-
-  /* function isFilm<T extends IFilm>(value: T) {
-    return "title" in value;
-  }; */
 
   const isPeople = (value: ResEntity): value is IPeople => {
     return "birth_year" in value;
@@ -58,12 +54,25 @@ const SearchResult = (props: { item: ResEntity }) => {
         setNestedProp([respArrPeople, respArrStarships]);
       }
       if (isPeople(item)) {
-        const respArrPeople = await Promise.all(
-          (item.characters as string[]).map(async (url) => {
-            const resp = await getItems<IPeople>(url);
+        const respArrFilms = await Promise.all(
+          (item.films as string[]).map(async (url) => {
+            const resp = await getItems<IFilm>(url);
             return resp;
           })
         );
+        const respArrSpecies = await Promise.all(
+          (item.species as string[]).map(async (url) => {
+            const resp = await getItems<ISpecie>(url);
+            return resp;
+          })
+        );
+        const respArrVehicles = await Promise.all(
+          (item.vehicles as string[]).map(async (url) => {
+            const resp = await getItems<IVehicle>(url);
+            return resp;
+          })
+        );
+        setNestedProp([respArrFilms, respArrSpecies, respArrVehicles]);
       }
     })();
   }, [nestedProp]);
@@ -106,10 +115,12 @@ const SearchResult = (props: { item: ResEntity }) => {
                   : item.passengers}
         </li>
         <li className="perk">
-          {isFilm(item) && nestedProp[0].map(person => isPeople(person) && person.name).slice(0, 5).join(", ")}
+          {isFilm(item) ? nestedProp[0].map(character => isPeople(character) && character.name).slice(0, 5).join(", ") :
+          isPeople(item) ? nestedProp[0].map(film => isPeople(film) && film.name).slice(0, 5).join(", ") : ""}
         </li>
         <li className="perk">
-          {isFilm(item) && nestedProp[1].map(ship => isStarship(ship) && ship.name).slice(0, 5).join(", ")}
+          {isFilm(item) ? nestedProp[1].map(ship => isStarship(ship) && ship.name).slice(0, 5).join(", ") :
+          isPeople(item) ? nestedProp[1].map(specie => isPeople(specie) && specie.name).slice(0, 5).join(", ") : ""}
         </li>
       </ul>
     </div>
