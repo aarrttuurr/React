@@ -1,6 +1,6 @@
 import "./SearchResult.css";
-import { useState, useEffect } from "react";
-import { ApiData, IFilm, IPeople, IPlanet, ISpecie, ResEntity, IStarship, IVehicle } from "../types/data";
+import { useState, useLayoutEffect } from "react";
+import { IFilm, IPeople, IPlanet, ISpecie, ResEntity, IStarship, IVehicle } from "../types/data";
 
 const SearchResult = (props: { item: ResEntity }) => {
   const { item } = props;
@@ -36,7 +36,7 @@ const SearchResult = (props: { item: ResEntity }) => {
     return await result.json();
   }
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     (async () => {
       if (isFilm(item)) {
         const respArrPeople = await Promise.all(
@@ -83,20 +83,20 @@ const SearchResult = (props: { item: ResEntity }) => {
       <ul className="result-perks">
         <li className="perk">
           {isFilm(item)
-            ? item.episode_id
+            ? "Episode: " + item.episode_id
             : isPeople(item)
-              ? item.gender
+              ? "Gender: " + item.gender
               : isPlanet(item)
-                ? item.climate
+                ? "Climate: " + item.climate
                 : isSpecie(item)
-                  ? item.classification
-                  : item.manufacturer}
+                  ? "Class: " + item.classification
+                  : "Producer: " + item.manufacturer}
         </li>
         <li className="perk">
           {isFilm(item)
-            ? item.release_date.toString()
+            ? "Release date: " + item.release_date.toString()
             : isPeople(item)
-              ? item.birth_year
+              ? "Birth: " + item.birth_year
               : isPlanet(item)
                 ? item.population
                 : isSpecie(item)
@@ -105,7 +105,7 @@ const SearchResult = (props: { item: ResEntity }) => {
         </li>
         <li className="perk">
           {isFilm(item)
-            ? item.director
+            ? "Director: " + item.director
             : isPeople(item)
               ? item.height
               : isPlanet(item)
@@ -115,12 +115,28 @@ const SearchResult = (props: { item: ResEntity }) => {
                   : item.passengers}
         </li>
         <li className="perk">
-          {isFilm(item) ? nestedProp[0].map(character => isPeople(character) && character.name).slice(0, 5).join(", ") :
-          isPeople(item) ? nestedProp[0].map(film => isPeople(film) && film.name).slice(0, 5).join(", ") : ""}
+          {isFilm(item) &&
+            nestedProp[0]
+              ?.map((character) => isPeople(character) && character.name)
+              .slice(0, 5)
+              .join(", ")}
+          {isPeople(item) &&
+            nestedProp[0]
+              ?.map((film) => isFilm(film) && film.title)
+              .slice(0, 5)
+              .join(", ")}
         </li>
         <li className="perk">
-          {isFilm(item) ? nestedProp[1].map(ship => isStarship(ship) && ship.name).slice(0, 5).join(", ") :
-          isPeople(item) ? nestedProp[1].map(specie => isPeople(specie) && specie.name).slice(0, 5).join(", ") : ""}
+          {isFilm(item) &&
+            nestedProp[1]
+              ?.map((ship) => isStarship(ship) && ship.name)
+              .slice(0, 5)
+              .join(", ")}
+          {isPeople(item) &&
+            nestedProp[1]
+              ?.map((specie) => isSpecie(specie) && specie.name)
+              .slice(0, 5)
+              .join(", ")}
         </li>
       </ul>
     </div>
