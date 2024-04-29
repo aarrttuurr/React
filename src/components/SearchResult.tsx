@@ -101,44 +101,35 @@ const SearchResult = (props: { item: ResEntity }) => {
                 ? "Height: " + item.population
                 : isSpecie(item)
                   ? "~Height: " + item.average_height
-                  : "Passengers" + item.passengers}
+                  : "Passengers: " + item.passengers}
+        </li>
+        {nestedProp.map(nestedPropItem => {
+          return (nestedPropItem.length > 0) && 
+            <li className="perk">
+              {nestedPropItem
+                .map((elObj) => isFilm(elObj) ? elObj.title : elObj.name)
+                .slice(0, 5)
+                .join(", ")}
+            </li>
+        })}
+        {/* <li className="perk">
+          {nestedProp[0]
+            ?.map((elObj) => isFilm(elObj) ? elObj.title : elObj.name)
+            .slice(0, 5)
+            .join(", ")}
         </li>
         <li className="perk">
-          {isFilm(item) &&
-            nestedProp[0]
-              ?.map((character) => isPeople(character) && character.name)
-              .slice(0, 5)
-              .join(", ")}
-          {isPeople(item) &&
-            nestedProp[0]
-              ?.map((film) => isFilm(film) && film.title)
-              .slice(0, 5)
-              .join(", ")}
-          {isPlanet(item) &&
-            nestedProp[0]
-              ?.map((character) => isPeople(character) && character.name)
-              .slice(0, 5)
-              .join(", ")}
+          {nestedProp[1]
+            ?.map((elObj) => isFilm(elObj) ? elObj.title : elObj.name)
+            .slice(0, 5)
+            .join(", ")}
         </li>
         <li className="perk">
-          {isFilm(item) &&
-            nestedProp[1]
-              ?.map((ship) => isStarship(ship) && ship.name)
-              .slice(0, 5)
-              .join(", ")}
-          {isPeople(item) &&
-            nestedProp[1]
-              ?.map((specie) => isSpecie(specie) && specie.name)
-              .slice(0, 5)
-              .join(", ")}
-        </li>
-        <li className="perk">
-          {isFilm(item) &&
-            nestedProp[2]
-              ?.map((vehicle) => isVehicle(vehicle) && vehicle.name)
-              .slice(0, 5)
-              .join(", ")}
-        </li>
+          {nestedProp[2]
+            ?.map((elObj) => isFilm(elObj) ? elObj.title : elObj.name)
+            .slice(0, 5)
+            .join(", ")}
+        </li> */}
       </ul>
     </div>
   );
