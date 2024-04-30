@@ -8,12 +8,12 @@ export interface ApiData {
 export type ResEntity = IFilm | IPeople | IPlanet | ISpecie | IStarship | IVehicle;
 
 export enum ResourcesType {
-  Films = "films",
-  People = "people",
-  Planets = "planets",
-  Species = "species",
-  Starships = "starships",
-  Vehicles = "vehicles",
+  IFilm = "films",
+  IPeople = "people",
+  IPlanet = "planets",
+  ISpecie = "species",
+  IStarship = "starships",
+  IVehicle = "vehicles",
 }
 
 export interface IFilm {

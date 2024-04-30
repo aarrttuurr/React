@@ -19,7 +19,7 @@ const SearchBar: FC<SetFoundProps> = ({ setFound }) => {
   useEffect(() => {
     (async () => {
       const query = encodeURIComponent(search);
-      const response = await searchForItems(ResourcesType.Starships, query);
+      const response = await searchForItems(ResourcesType.IStarship, query);
       setFound(response);
       console.log(response);
     })();
