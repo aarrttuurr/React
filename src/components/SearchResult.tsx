@@ -103,14 +103,17 @@ const SearchResult = (props: { item: ResEntity }) => {
                   ? "~Height: " + item.average_height
                   : "Passengers: " + item.passengers}
         </li>
-        {nestedProp.map(nestedPropItem => {
-          return (nestedPropItem.length > 0) && 
-            <li className="perk">
-              {nestedPropItem
-                .map((elObj) => isFilm(elObj) ? elObj.title : elObj.name)
-                .slice(0, 5)
-                .join(", ")}
-            </li>
+        {nestedProp.map((nestedPropItem) => {
+          return (
+            nestedPropItem.length > 0 && (
+              <li className="perk">
+                {nestedPropItem
+                  .map((elObj) => (isFilm(elObj) ? elObj.title : elObj.name))
+                  .slice(0, 5)
+                  .join(", ")}
+              </li>
+            )
+          );
         })}
         {/* <li className="perk">
           {nestedProp[0]
