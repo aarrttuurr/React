@@ -17,7 +17,19 @@ const SearchResult = (props: { item: ResEntity }) => {
 
   const isVehicle = (value: ResEntity): value is IVehicle => "model" in value;
 
-  const [nestedProp, setNestedProp] = useState<ResEntity[][]>([]);
+  interface StateEntities {
+    films?: IFilm[];
+    characters?: IPeople[];
+    residents?: IPeople[];
+    people?: IPeople[];
+    pilots?: IPeople[];
+    homeworld?: IPlanet[];
+    species?: ISpecie[];
+    starships?: IStarship[];
+    vehicles?: IVehicle[];
+  }
+
+  const [nestedProp, setNestedProp] = useState<StateEntities>({});
 
   async function getItems<T>(url: string): Promise<T> {
     const result = await fetch(url);
@@ -25,12 +37,13 @@ const SearchResult = (props: { item: ResEntity }) => {
   }
 
   async function getItemsArray<TObj, TResp>(obj: TObj, key: keyof TObj) {
-    return await Promise.all(
+    const resultArr = await Promise.all(
       (obj[key] as string[]).map(async (url) => {
         const resp = await getItems<TResp>(url);
         return resp;
       })
     );
+    return {[key]: resultArr};
   }
 
   useLayoutEffect(() => {
@@ -39,32 +52,33 @@ const SearchResult = (props: { item: ResEntity }) => {
         const respArrPeople = await getItemsArray<typeof item, IPeople>(item, "characters");
         const respArrStarships = await getItemsArray<typeof item, IStarship>(item, "starships");
         const respArrVehicles = await getItemsArray<typeof item, IVehicle>(item, "vehicles");
-        setNestedProp([respArrPeople, respArrStarships, respArrVehicles]);
+        console.log(Object.assign(respArrPeople, respArrStarships, respArrVehicles));
+        setNestedProp(Object.assign(respArrPeople, respArrStarships, respArrVehicles));
       }
       if (isPeople(item)) {
         const respArrFilms = await getItemsArray<typeof item, IFilm>(item, "films");
         const respArrSpecies = await getItemsArray<typeof item, ISpecie>(item, "species");
         const respArrVehicles = await getItemsArray<typeof item, IVehicle>(item, "vehicles");
-        setNestedProp([respArrFilms, respArrSpecies, respArrVehicles]);
+        setNestedProp(Object.assign(respArrFilms, respArrSpecies, respArrVehicles));
       }
       if (isPlanet(item)) {
         const respArrFilms = await getItemsArray<typeof item, IFilm>(item, "films");
         const respArrResidents = await getItemsArray<typeof item, IPeople>(item, "residents");
-        setNestedProp([respArrFilms, respArrResidents]);
+        setNestedProp(Object.assign(respArrFilms, respArrResidents));
       }
       if (isSpecie(item)) {
         const respArrFilms = await getItemsArray<typeof item, IFilm>(item, "films");
         const respArrPeople = await getItemsArray<typeof item, IPeople>(item, "people");
         const respArrHomeworld = await getItemsArray<typeof item, IPlanet>(item, "homeworld");
-        setNestedProp([respArrFilms, respArrPeople, respArrHomeworld]);
+        setNestedProp(Object.assign(respArrFilms, respArrPeople, respArrHomeworld));
       }
       if (isStarship(item) || isVehicle(item)) {
         const respArrFilms = await getItemsArray<typeof item, IFilm>(item, "films");
         const respArrPeople = await getItemsArray<typeof item, IPeople>(item, "pilots");
-        setNestedProp([respArrFilms, respArrPeople]);
+        setNestedProp(Object.assign(respArrFilms, respArrPeople));
       }
     })();
-  }, [nestedProp]);
+  }, []);
 
   return (
     <div className="search-result">
@@ -103,7 +117,7 @@ const SearchResult = (props: { item: ResEntity }) => {
                   ? "~Height: " + item.average_height
                   : "Passengers: " + item.passengers}
         </li>
-        {nestedProp.map((nestedPropItem) => {
+        {/* nestedProp.map((nestedPropItem) => {
           return (
             nestedPropItem.length > 0 && (
               <li className="perk">
@@ -114,7 +128,21 @@ const SearchResult = (props: { item: ResEntity }) => {
               </li>
             )
           );
-        })}
+        }); */}
+        {(() => {
+          const arr = [];
+          for (k in nestedProp) {
+            arr.push(
+              <li className="perk" key={k}>
+                {nestedProp[k]
+                  .map((elObj) => (isFilm(elObj) ? elObj.title : elObj.name))
+                  .slice(0, 5)
+                  .join(", ")}}
+              </li>
+            );
+          }
+          return arr;
+        })()}
         {/* <li className="perk">
           {nestedProp[0]
             ?.map((elObj) => isFilm(elObj) ? elObj.title : elObj.name)
