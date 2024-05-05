@@ -43,7 +43,7 @@ const SearchResult = (props: { item: ResEntity }) => {
         return resp;
       })
     );
-    return {[key]: resultArr};
+    return { [key]: resultArr };
   }
 
   useLayoutEffect(() => {
@@ -131,13 +131,13 @@ const SearchResult = (props: { item: ResEntity }) => {
         }); */}
         {(() => {
           const arr = [];
-          for (k in nestedProp) {
+          for (key in nestedProp) {
             arr.push(
-              <li className="perk" key={k}>
-                {nestedProp[k]
+              <li className="perk" key={key}>
+                {nestedProp[key]
                   .map((elObj) => (isFilm(elObj) ? elObj.title : elObj.name))
                   .slice(0, 5)
-                  .join(", ")}}
+                  .join(", ")}
               </li>
             );
           }
