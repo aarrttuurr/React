@@ -131,10 +131,10 @@ const SearchResult = (props: { item: ResEntity }) => {
         }); */}
         {(() => {
           const arr = [];
-          for (key in nestedProp) {
-            arr.push(
+          for (let key in nestedProp) {
+            nestedProp[key as keyof StateEntities] && arr.push(
               <li className="perk" key={key}>
-                {nestedProp[key]
+                {nestedProp[key as keyof StateEntities]
                   .map((elObj) => (isFilm(elObj) ? elObj.title : elObj.name))
                   .slice(0, 5)
                   .join(", ")}
@@ -143,24 +143,6 @@ const SearchResult = (props: { item: ResEntity }) => {
           }
           return arr;
         })()}
-        {/* <li className="perk">
-          {nestedProp[0]
-            ?.map((elObj) => isFilm(elObj) ? elObj.title : elObj.name)
-            .slice(0, 5)
-            .join(", ")}
-        </li>
-        <li className="perk">
-          {nestedProp[1]
-            ?.map((elObj) => isFilm(elObj) ? elObj.title : elObj.name)
-            .slice(0, 5)
-            .join(", ")}
-        </li>
-        <li className="perk">
-          {nestedProp[2]
-            ?.map((elObj) => isFilm(elObj) ? elObj.title : elObj.name)
-            .slice(0, 5)
-            .join(", ")}
-        </li> */}
       </ul>
     </div>
   );
