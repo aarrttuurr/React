@@ -132,9 +132,10 @@ const SearchResult = (props: { item: ResEntity }) => {
         {(() => {
           const arr = [];
           for (let key in nestedProp) {
-            nestedProp[key as keyof StateEntities] && arr.push(
+            const entityObj = nestedProp[key as keyof StateEntities];
+            arr.push(
               <li className="perk" key={key}>
-                {nestedProp[key as keyof StateEntities]
+                {(entityObj) && entityObj
                   .map((elObj) => (isFilm(elObj) ? elObj.title : elObj.name))
                   .slice(0, 5)
                   .join(", ")}
