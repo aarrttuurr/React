@@ -8,7 +8,6 @@ interface SetFoundProps {
 }
 
 const SearchBar: FC<SetFoundProps> = ({ setFound }) => {
-  // const [found, setFound] = useState<ApiResData>();
   const [search, setSearch] = useState("");
 
   const searchForItems = async (type: ResourcesType, value: string): Promise<ApiData> => {
@@ -19,7 +18,7 @@ const SearchBar: FC<SetFoundProps> = ({ setFound }) => {
   useEffect(() => {
     (async () => {
       const query = encodeURIComponent(search);
-      const response = await searchForItems(ResourcesType.IFilm, query);
+      const response = await searchForItems(ResourcesType.IPlanet, query);
       setFound(response);
       console.log(response);
     })();

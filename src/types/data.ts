@@ -16,6 +16,18 @@ export enum ResourcesType {
   IVehicle = "vehicles",
 }
 
+export interface StateEntities {
+  films?: IFilm[];
+  characters?: IPeople[];
+  residents?: IPeople[];
+  people?: IPeople[];
+  pilots?: IPeople[];
+  homeworld?: IPlanet[];
+  species?: ISpecie[];
+  starships?: IStarship[];
+  vehicles?: IVehicle[];
+}
+
 export interface IFilm {
   characters: string[] | IPeople[];
   created: Date;

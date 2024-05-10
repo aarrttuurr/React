@@ -1,6 +1,6 @@
 import "./SearchResult.css";
 import { useState, useLayoutEffect } from "react";
-import { IFilm, IPeople, IPlanet, ISpecie, ResEntity, IStarship, IVehicle } from "../types/data";
+import { IFilm, IPeople, IPlanet, ISpecie, ResEntity, IStarship, IVehicle, StateEntities } from "../types/data";
 
 const SearchResult = (props: { item: ResEntity }) => {
   const { item } = props;
@@ -16,18 +16,6 @@ const SearchResult = (props: { item: ResEntity }) => {
   const isStarship = (value: ResEntity): value is IStarship => "model" in value;
 
   const isVehicle = (value: ResEntity): value is IVehicle => "model" in value;
-
-  interface StateEntities {
-    films?: IFilm[];
-    characters?: IPeople[];
-    residents?: IPeople[];
-    people?: IPeople[];
-    pilots?: IPeople[];
-    homeworld?: IPlanet[];
-    species?: ISpecie[];
-    starships?: IStarship[];
-    vehicles?: IVehicle[];
-  }
 
   const [nestedProp, setNestedProp] = useState<StateEntities>({});
 
@@ -84,7 +72,36 @@ const SearchResult = (props: { item: ResEntity }) => {
     <div className="search-result">
       <div className="result-title"> {isFilm(item) ? item.title : item.name} </div>
       <ul className="result-perks">
-        <li className="perk">
+        {isFilm(item) ? 
+          <>
+            <li className="perk"><b>Episode: </b>{item.episode_id}</li>
+            <li className="perk"><b>Release date: </b>{item.release_date.toString()}</li>
+            <li className="perk"><b>Episode: </b>{item.episode_id}</li>
+          </> : 
+          isPeople(item) ? 
+            <>
+              <li className="perk"><b>Gender: </b>{item.gender}</li>
+              <li className="perk"><b>Birth: </b>{item.birth_year}</li>
+              <li className="perk"><b>Height: </b>{item.height}</li>
+            </> :
+            isPlanet(item) ?
+              <>
+                <li className="perk"><b>Climate: </b>{item.climate}</li>
+                <li className="perk"><b>Population: </b>{item.population}</li>
+                <li className="perk"><b>Gravity: </b>{item.gravity}</li>
+              </> :
+              isSpecie(item) ?
+                <>
+                  <li className="perk"><b>Class: </b>{item.classification}</li>
+                  <li className="perk"><b>~Lifespan: </b>{item.average_lifespan}</li>
+                  <li className="perk"><b>~Height: </b>{item.average_height}</li>
+                </> :
+                <>
+                  <li className="perk"><b>Producer: </b>{item.manufacturer}</li>
+                  <li className="perk"><b>Model: </b>{item.model}</li>
+                  <li className="perk"><b>Passengers: </b>{item.passengers}</li>
+                </>}
+        {/* <li className="perk">
           {isFilm(item)
             ? "Episode: " + item.episode_id
             : isPeople(item)
@@ -101,7 +118,7 @@ const SearchResult = (props: { item: ResEntity }) => {
             : isPeople(item)
               ? "Birth: " + item.birth_year
               : isPlanet(item)
-                ? "Birth: " + item.population
+                ? "Population: " + item.population
                 : isSpecie(item)
                   ? "~Lifespan: " + item.average_lifespan
                   : "Model: " + item.model}
@@ -116,7 +133,7 @@ const SearchResult = (props: { item: ResEntity }) => {
                 : isSpecie(item)
                   ? "~Height: " + item.average_height
                   : "Passengers: " + item.passengers}
-        </li>
+        </li> */}
         {/* nestedProp.map((nestedPropItem) => {
           return (
             nestedPropItem.length > 0 && (
@@ -130,19 +147,20 @@ const SearchResult = (props: { item: ResEntity }) => {
           );
         }); */}
         {(() => {
-          const arr = [];
+          const arrEntityListItems = [];
           for (let key in nestedProp) {
-            const entityObj = nestedProp[key as keyof StateEntities];
-            arr.push(
+            const entityArr = nestedProp[key as keyof StateEntities];
+            entityArr && entityArr.length && arrEntityListItems.push(
               <li className="perk" key={key}>
-                {(entityObj) && entityObj
+                <strong>{key}: </strong>
+                {entityArr
                   .map((elObj) => (isFilm(elObj) ? elObj.title : elObj.name))
                   .slice(0, 5)
                   .join(", ")}
               </li>
             );
           }
-          return arr;
+          return arrEntityListItems;
         })()}
       </ul>
     </div>
