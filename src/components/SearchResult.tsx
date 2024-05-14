@@ -72,35 +72,82 @@ const SearchResult = (props: { item: ResEntity }) => {
     <div className="search-result">
       <div className="result-title"> {isFilm(item) ? item.title : item.name} </div>
       <ul className="result-perks">
-        {isFilm(item) ? 
+        {isFilm(item) ? (
           <>
-            <li className="perk"><b>Episode: </b>{item.episode_id}</li>
-            <li className="perk"><b>Release date: </b>{item.release_date.toString()}</li>
-            <li className="perk"><b>Episode: </b>{item.episode_id}</li>
-          </> : 
-          isPeople(item) ? 
-            <>
-              <li className="perk"><b>Gender: </b>{item.gender}</li>
-              <li className="perk"><b>Birth: </b>{item.birth_year}</li>
-              <li className="perk"><b>Height: </b>{item.height}</li>
-            </> :
-            isPlanet(item) ?
-              <>
-                <li className="perk"><b>Climate: </b>{item.climate}</li>
-                <li className="perk"><b>Population: </b>{item.population}</li>
-                <li className="perk"><b>Gravity: </b>{item.gravity}</li>
-              </> :
-              isSpecie(item) ?
-                <>
-                  <li className="perk"><b>Class: </b>{item.classification}</li>
-                  <li className="perk"><b>~Lifespan: </b>{item.average_lifespan}</li>
-                  <li className="perk"><b>~Height: </b>{item.average_height}</li>
-                </> :
-                <>
-                  <li className="perk"><b>Producer: </b>{item.manufacturer}</li>
-                  <li className="perk"><b>Model: </b>{item.model}</li>
-                  <li className="perk"><b>Passengers: </b>{item.passengers}</li>
-                </>}
+            <li className="perk">
+              <b>Episode: </b>
+              {item.episode_id}
+            </li>
+            <li className="perk">
+              <b>Release date: </b>
+              {item.release_date.toString()}
+            </li>
+            <li className="perk">
+              <b>Episode: </b>
+              {item.episode_id}
+            </li>
+          </>
+        ) : isPeople(item) ? (
+          <>
+            <li className="perk">
+              <b>Gender: </b>
+              {item.gender}
+            </li>
+            <li className="perk">
+              <b>Birth: </b>
+              {item.birth_year}
+            </li>
+            <li className="perk">
+              <b>Height: </b>
+              {item.height}
+            </li>
+          </>
+        ) : isPlanet(item) ? (
+          <>
+            <li className="perk">
+              <b>Climate: </b>
+              {item.climate}
+            </li>
+            <li className="perk">
+              <b>Population: </b>
+              {item.population}
+            </li>
+            <li className="perk">
+              <b>Gravity: </b>
+              {item.gravity}
+            </li>
+          </>
+        ) : isSpecie(item) ? (
+          <>
+            <li className="perk">
+              <b>Class: </b>
+              {item.classification}
+            </li>
+            <li className="perk">
+              <b>~Lifespan: </b>
+              {item.average_lifespan}
+            </li>
+            <li className="perk">
+              <b>~Height: </b>
+              {item.average_height}
+            </li>
+          </>
+        ) : (
+          <>
+            <li className="perk">
+              <b>Producer: </b>
+              {item.manufacturer}
+            </li>
+            <li className="perk">
+              <b>Model: </b>
+              {item.model}
+            </li>
+            <li className="perk">
+              <b>Passengers: </b>
+              {item.passengers}
+            </li>
+          </>
+        )}
         {/* <li className="perk">
           {isFilm(item)
             ? "Episode: " + item.episode_id
@@ -134,31 +181,21 @@ const SearchResult = (props: { item: ResEntity }) => {
                   ? "~Height: " + item.average_height
                   : "Passengers: " + item.passengers}
         </li> */}
-        {/* nestedProp.map((nestedPropItem) => {
-          return (
-            nestedPropItem.length > 0 && (
-              <li className="perk">
-                {nestedPropItem
-                  .map((elObj) => (isFilm(elObj) ? elObj.title : elObj.name))
-                  .slice(0, 5)
-                  .join(", ")}
-              </li>
-            )
-          );
-        }); */}
         {(() => {
           const arrEntityListItems = [];
-          for (let key in nestedProp) {
+          for (const key in nestedProp) {
             const entityArr = nestedProp[key as keyof StateEntities];
-            entityArr && entityArr.length && arrEntityListItems.push(
-              <li className="perk" key={key}>
-                <strong>{key}: </strong>
-                {entityArr
-                  .map((elObj) => (isFilm(elObj) ? elObj.title : elObj.name))
-                  .slice(0, 5)
-                  .join(", ")}
-              </li>
-            );
+            entityArr &&
+              entityArr.length &&
+              arrEntityListItems.push(
+                <li className="perk" key={key}>
+                  <strong>{key}: </strong>
+                  {entityArr
+                    .map((elObj) => (isFilm(elObj) ? elObj.title : elObj.name))
+                    .slice(0, 5)
+                    .join(", ")}
+                </li>
+              );
           }
           return arrEntityListItems;
         })()}

@@ -1,5 +1,10 @@
-import { FC } from "react";
+import { ApiData } from "../types/data";
 
-const SearchResultPagination: FC = () => {}
+const SearchResultPagination = (props: { data: ApiData }) => {
+  const { data } = props;
+  return (
+    
+  );
+};
 
 export default SearchResultPagination;

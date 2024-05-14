@@ -17,7 +17,7 @@ const Home: FC = () => {
       <div className="search-bar-container">
         <SearchBar setFound={setResp} />
         {resp && resp.results.length > 0 && <SearchResultsList data={resp.results} />}
-        <SearchResultPagination />
+        <SearchResultPagination data={resp} />
       </div>
     </div>
   );
