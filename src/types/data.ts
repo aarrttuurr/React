@@ -90,7 +90,7 @@ export interface ISpecie {
   edited: Date;
   eye_colors: string;
   hair_colors: string;
-  homeworld: string | IPlanet;
+  homeworld: string | IPlanet | null;
   language: string;
   name: string;
   people: string[] | IPeople[];

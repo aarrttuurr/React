@@ -3,7 +3,9 @@ import { ApiData } from "../types/data";
 
 const SearchResultPagination = (props: { data: ApiData }) => {
   const { data } = props;
-  const [page, setpage] = useState("");
+
+  const [page, setPage] = useState(1);
+  const [pageQty, setPageQty] = useState(0);
 
   const pageQuery = async (url: string): Promise<ApiData> => {
     const result = await fetch(url);
@@ -11,17 +13,19 @@ const SearchResultPagination = (props: { data: ApiData }) => {
   };
 
   const handleNextPageClick = () => {
-    data.next && 
-  }
+    //data.next &&
+  };
 
-  const handlePrevPageClick = () => {
-
-  }
+  const handlePrevPageClick = () => {};
 
   return (
     <div className="search-pagination">
-      <button className="search-prev-btn" onClick={handlePrevPageClick}>{"<"}</button>
-      <button className="search-next-btn" onClick={handleNextPageClick}>{">"}</button>
+      <button className="search-prev-btn" onClick={handlePrevPageClick}>
+        {"<"}
+      </button>
+      <button className="search-next-btn" onClick={handleNextPageClick}>
+        {">"}
+      </button>
     </div>
   );
 };

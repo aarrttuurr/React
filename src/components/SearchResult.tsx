@@ -1,5 +1,5 @@
 import "./SearchResult.css";
-import { useState, useLayoutEffect } from "react";
+import { useState, useEffect } from "react";
 import { IFilm, IPeople, IPlanet, ISpecie, ResEntity, IStarship, IVehicle, StateEntities } from "../types/data";
 
 const SearchResult = (props: { item: ResEntity }) => {
@@ -25,16 +25,21 @@ const SearchResult = (props: { item: ResEntity }) => {
   }
 
   async function getItemsArray<TObj, TResp>(obj: TObj, key: keyof TObj) {
-    const resultArr = await Promise.all(
+    /* const resultArr = await Promise.all(
       (obj[key] as string[]).map(async (url) => {
         const resp = await getItems<TResp>(url);
         return resp;
       })
-    );
-    return { [key]: resultArr };
+    ); */
+    const result = Array.isArray(obj[key])
+      ? await Promise.all((obj[key] as string[]).map(async (url) => await getItems<TResp>(url)))
+      : typeof obj[key] === "string"
+        ? [await getItems<TResp>(obj[key] as string)]
+        : [];
+    return { [key]: result };
   }
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     (async () => {
       if (isFilm(item)) {
         const respArrPeople = await getItemsArray<typeof item, IPeople>(item, "characters");
@@ -47,6 +52,7 @@ const SearchResult = (props: { item: ResEntity }) => {
         const respArrFilms = await getItemsArray<typeof item, IFilm>(item, "films");
         const respArrSpecies = await getItemsArray<typeof item, ISpecie>(item, "species");
         const respArrVehicles = await getItemsArray<typeof item, IVehicle>(item, "vehicles");
+        console.log(Object.assign(respArrFilms, respArrSpecies, respArrVehicles));
         setNestedProp(Object.assign(respArrFilms, respArrSpecies, respArrVehicles));
       }
       if (isPlanet(item)) {
@@ -58,6 +64,7 @@ const SearchResult = (props: { item: ResEntity }) => {
         const respArrFilms = await getItemsArray<typeof item, IFilm>(item, "films");
         const respArrPeople = await getItemsArray<typeof item, IPeople>(item, "people");
         const respArrHomeworld = await getItemsArray<typeof item, IPlanet>(item, "homeworld");
+        console.log(Object.assign(respArrFilms, respArrPeople, respArrHomeworld));
         setNestedProp(Object.assign(respArrFilms, respArrPeople, respArrHomeworld));
       }
       if (isStarship(item) || isVehicle(item)) {
@@ -66,7 +73,7 @@ const SearchResult = (props: { item: ResEntity }) => {
         setNestedProp(Object.assign(respArrFilms, respArrPeople));
       }
     })();
-  }, []);
+  }, [item]);
 
   return (
     <div className="search-result">
@@ -148,39 +155,6 @@ const SearchResult = (props: { item: ResEntity }) => {
             </li>
           </>
         )}
-        {/* <li className="perk">
-          {isFilm(item)
-            ? "Episode: " + item.episode_id
-            : isPeople(item)
-              ? "Gender: " + item.gender
-              : isPlanet(item)
-                ? "Climate: " + item.climate
-                : isSpecie(item)
-                  ? "Class: " + item.classification
-                  : "Producer: " + item.manufacturer}
-        </li>
-        <li className="perk">
-          {isFilm(item)
-            ? "Release date: " + item.release_date.toString()
-            : isPeople(item)
-              ? "Birth: " + item.birth_year
-              : isPlanet(item)
-                ? "Population: " + item.population
-                : isSpecie(item)
-                  ? "~Lifespan: " + item.average_lifespan
-                  : "Model: " + item.model}
-        </li>
-        <li className="perk">
-          {isFilm(item)
-            ? "Director: " + item.director
-            : isPeople(item)
-              ? "Height: " + item.height
-              : isPlanet(item)
-                ? "Height: " + item.population
-                : isSpecie(item)
-                  ? "~Height: " + item.average_height
-                  : "Passengers: " + item.passengers}
-        </li> */}
         {(() => {
           const arrEntityListItems = [];
           for (const key in nestedProp) {
