@@ -16,6 +16,11 @@ export enum ResourcesType {
   IVehicle = "vehicles",
 }
 
+export enum PaginationMove {
+  Next="next",
+  Prev="prev",
+}
+
 export interface StateEntities {
   films?: IFilm[];
   characters?: IPeople[];
