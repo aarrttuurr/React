@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { ApiData, PaginationMove } from "../types/data";
 
 interface PaginationProps {
@@ -7,11 +7,12 @@ interface PaginationProps {
   setPage: React.Dispatch<React.SetStateAction<number>>;
   setPageQty: React.Dispatch<React.SetStateAction<number>>; */
   setFound: React.Dispatch<React.SetStateAction<ApiData>>;
+  pageQty: React.Dispatch<>
 }
 
 const SearchResultPagination: FC<PaginationProps> = ({ data, setFound}) => {
   const [page, setPage] = useState(1);
-  const [pgnLastMove, setPgnLastMove] = useState<PaginationMove>();
+  const [pgnCurrMove, setPgnCurrMove] = useState<PaginationMove>();
   //const [pageQty, setPageQty] = useState(Math.ceil(data.count / 10));
 
   const pageQuery = async (url: string): Promise<ApiData> => {
@@ -21,7 +22,7 @@ const SearchResultPagination: FC<PaginationProps> = ({ data, setFound}) => {
 
   useEffect(() => {
     (async () => {
-      const query = encodeURIComponent(data.next); //     <----------------------optionate it--------------------------<<
+      const query = (pgnCurrMove === "next") ? data.next : data.previous;
       const response = await pageQuery(query);
       setFound(response);
       console.log(response);
@@ -31,23 +32,24 @@ const SearchResultPagination: FC<PaginationProps> = ({ data, setFound}) => {
   const handleNextPageClick = () => {
     if(data.next) {
       setPage(page + 1);
-      setPgnLastMove(PaginationMove.Next);
+      setPgnCurrMove(PaginationMove.Next);
     }; 
   };
 
   const handlePrevPageClick = () => {
     if(data.previous) {
       setPage(page - 1);
-      setPgnLastMove(PaginationMove.Prev);
+      setPgnCurrMove(PaginationMove.Prev);
     } 
   };
 
   return (
     <div className="search-pagination">
-      <button className="search-prev-btn" onClick={() => handleNextPageClick()}>
+      <button className="search-prev-btn" onClick={() => handlePrevPageClick()}>
         {"<"}
       </button>
-      <button className="search-next-btn" onClick={() => handlePrevPageClick()}>
+
+      <button className="search-next-btn" onClick={() => handleNextPageClick()}>
         {">"}
       </button>
     </div>

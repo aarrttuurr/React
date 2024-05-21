@@ -5,9 +5,10 @@ import { ApiData, ResourcesType } from "../types/data";
 
 interface SetFoundProps {
   setFound: React.Dispatch<React.SetStateAction<ApiData>>;
+  setPageQty: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const SearchBar: FC<SetFoundProps> = ({ setFound }) => {
+const SearchBar: FC<SetFoundProps> = ({ setFound, setPageQty }) => {
   const [search, setSearch] = useState("");
 
   const searchForItems = async (type: ResourcesType, value: string): Promise<ApiData> => {
@@ -18,8 +19,9 @@ const SearchBar: FC<SetFoundProps> = ({ setFound }) => {
   useEffect(() => {
     (async () => {
       const query = encodeURIComponent(search);
-      const response = await searchForItems(ResourcesType.ISpecie, query);
+      const response = await searchForItems(ResourcesType.IPeople, query);
       setFound(response);
+      setPageQty(Math.ceil(response.count / 10));
       console.log(response);
     })();
   }, [search]);

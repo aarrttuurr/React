@@ -11,15 +11,14 @@ const Home: FC = () => {
     previous: "",
     results: [],
   });
-  //const [page, setPage] = useState(1);
-  //const [pageQty, setPageQty] = useState(0);
+  const [pageQty, setPageQty] = useState(0);
 
   return (
     <div className="app">
       <div className="search-bar-container">
-        <SearchBar setFound={setResp} />
+        <SearchBar setFound={setResp} setPageQty={setPageQty} />
         {resp && resp.results.length > 0 && <SearchResultsList data={resp.results} />}
-        <SearchResultPagination data={resp} setFound={setResp} />
+        <SearchResultPagination data={resp} setFound={setResp} pageQty={pageQty} />
       </div>
     </div>
   );
