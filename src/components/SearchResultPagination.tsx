@@ -3,14 +3,13 @@ import { ApiData, PaginationMove } from "../types/data";
 
 interface PaginationProps {
   data: ApiData;
-  /* page: number;
-  setPage: React.Dispatch<React.SetStateAction<number>>;
+  /*setPage: React.Dispatch<React.SetStateAction<number>>;
   setPageQty: React.Dispatch<React.SetStateAction<number>>; */
   setFound: React.Dispatch<React.SetStateAction<ApiData>>;
-  pageQty: React.Dispatch<>
+  pageQty: number;
 }
 
-const SearchResultPagination: FC<PaginationProps> = ({ data, setFound}) => {
+const SearchResultPagination: FC<PaginationProps> = ({ data, setFound, pageQty }) => {
   const [page, setPage] = useState(1);
   const [pgnCurrMove, setPgnCurrMove] = useState<PaginationMove>();
   //const [pageQty, setPageQty] = useState(Math.ceil(data.count / 10));
@@ -22,7 +21,7 @@ const SearchResultPagination: FC<PaginationProps> = ({ data, setFound}) => {
 
   useEffect(() => {
     (async () => {
-      const query = (pgnCurrMove === "next") ? data.next : data.previous;
+      const query = pgnCurrMove === "next" ? data.next : data.previous;
       const response = await pageQuery(query);
       setFound(response);
       console.log(response);
@@ -30,17 +29,17 @@ const SearchResultPagination: FC<PaginationProps> = ({ data, setFound}) => {
   }, [page]);
 
   const handleNextPageClick = () => {
-    if(data.next) {
+    if (data.next) {
       setPage(page + 1);
       setPgnCurrMove(PaginationMove.Next);
-    }; 
+    }
   };
 
   const handlePrevPageClick = () => {
-    if(data.previous) {
+    if (data.previous) {
       setPage(page - 1);
       setPgnCurrMove(PaginationMove.Prev);
-    } 
+    }
   };
 
   return (
@@ -48,7 +47,7 @@ const SearchResultPagination: FC<PaginationProps> = ({ data, setFound}) => {
       <button className="search-prev-btn" onClick={() => handlePrevPageClick()}>
         {"<"}
       </button>
-
+      <button className="search-pgnum-btn">{pageQty}</button>
       <button className="search-next-btn" onClick={() => handleNextPageClick()}>
         {">"}
       </button>
