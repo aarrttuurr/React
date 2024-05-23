@@ -24,7 +24,7 @@ const SearchBar: FC<SetFoundProps> = ({ setFound, setPageQty }) => {
       setPageQty(Math.ceil(response.count / 10));
       console.log(response);
     })();
-  }, [search]);
+  }, [search, setFound, setPageQty]);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();

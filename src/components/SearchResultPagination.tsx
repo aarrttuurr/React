@@ -42,14 +42,29 @@ const SearchResultPagination: FC<PaginationProps> = ({ data, setFound, pageQty }
     }
   };
 
+  const handlePageClick = (pageNumber: number) => {
+    if (pageNumber > 0 && pageNumber <= pageQty && pageNumber !== page) {
+      setPage(pageNumber);
+    }
+  };
+
   return (
     <div className="search-pagination">
       <button className="search-prev-btn" onClick={() => handlePrevPageClick()}>
-        {"<"}
+        {"⬅"}
       </button>
-      <button className="search-pgnum-btn">{pageQty}</button>
+      {/* <button className="search-pgnum-btn">{pageQty}</button> */}
+      {[...Array(pageQty)].map((_, i) => (
+        <button
+          className={`search-pgnum-btn ${page === i + 1 ? "selected" : ""}`}
+          key={i + 1}
+          onClick={() => handlePageClick(i + 1)}
+        >
+          {i + 1}
+        </button>
+      ))}
       <button className="search-next-btn" onClick={() => handleNextPageClick()}>
-        {">"}
+        {"➡"}
       </button>
     </div>
   );
