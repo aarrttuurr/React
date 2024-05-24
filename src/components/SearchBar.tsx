@@ -1,15 +1,17 @@
-import { FC, FormEvent, useState, useEffect } from "react";
+import { FC, FormEvent, useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
 import "./SearchBar.css";
 import { ApiData, ResourcesType } from "../types/data";
 
 interface SetFoundProps {
+  search: string;
+  setSearch: React.Dispatch<React.SetStateAction<string>>;
   setFound: React.Dispatch<React.SetStateAction<ApiData>>;
   setPageQty: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const SearchBar: FC<SetFoundProps> = ({ setFound, setPageQty }) => {
-  const [search, setSearch] = useState("");
+const SearchBar: FC<SetFoundProps> = ({ search, setSearch, setFound, setPageQty }) => {
+  //const [search, setSearch] = useState("");
 
   const searchForItems = async (type: ResourcesType, value: string): Promise<ApiData> => {
     const result = await fetch(`https://swapi.py4e.com/api/${type}/?search=${value}`);

@@ -3,13 +3,12 @@ import { ApiData, PaginationMove } from "../types/data";
 
 interface PaginationProps {
   data: ApiData;
-  /*setPage: React.Dispatch<React.SetStateAction<number>>;
-  setPageQty: React.Dispatch<React.SetStateAction<number>>; */
+  search: string;
   setFound: React.Dispatch<React.SetStateAction<ApiData>>;
   pageQty: number;
 }
 
-const SearchResultPagination: FC<PaginationProps> = ({ data, setFound, pageQty }) => {
+const SearchResultPagination: FC<PaginationProps> = ({ data, search, setFound, pageQty }) => {
   const [page, setPage] = useState(1);
   const [pgnCurrMove, setPgnCurrMove] = useState<PaginationMove>();
   //const [pageQty, setPageQty] = useState(Math.ceil(data.count / 10));
@@ -21,7 +20,13 @@ const SearchResultPagination: FC<PaginationProps> = ({ data, setFound, pageQty }
 
   useEffect(() => {
     (async () => {
-      const query = pgnCurrMove === "next" ? data.next : data.previous;
+      //const URL = `https://swapi.py4e.com/api/people/?search=${}&page=${page}`;
+      const query =
+        pgnCurrMove === "numb"
+          ? encodeURIComponent(`https://swapi.py4e.com/api/people/?search=${search}&page=${page}`)
+          : pgnCurrMove === "next"
+            ? data.next
+            : data.previous;
       const response = await pageQuery(query);
       setFound(response);
       console.log(response);
@@ -42,9 +47,10 @@ const SearchResultPagination: FC<PaginationProps> = ({ data, setFound, pageQty }
     }
   };
 
-  const handlePageClick = (pageNumber: number) => {
+  const handlePageChange = (pageNumber: number) => {
     if (pageNumber > 0 && pageNumber <= pageQty && pageNumber !== page) {
       setPage(pageNumber);
+      setPgnCurrMove(PaginationMove.Numb);
     }
   };
 
@@ -58,7 +64,7 @@ const SearchResultPagination: FC<PaginationProps> = ({ data, setFound, pageQty }
         <button
           className={`search-pgnum-btn ${page === i + 1 ? "selected" : ""}`}
           key={i + 1}
-          onClick={() => handlePageClick(i + 1)}
+          onClick={() => handlePageChange(i + 1)}
         >
           {i + 1}
         </button>

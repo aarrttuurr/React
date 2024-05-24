@@ -19,6 +19,7 @@ export enum ResourcesType {
 export enum PaginationMove {
   Next = "next",
   Prev = "prev",
+  Numb = "numb",
 }
 
 export interface StateEntities {
