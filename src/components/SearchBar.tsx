@@ -1,6 +1,7 @@
 import { FC, FormEvent, useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
 import "./SearchBar.css";
+import "../App.css";
 import { ApiData, ResourcesType } from "../types/data";
 
 interface SetFoundProps {

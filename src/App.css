@@ -13,3 +13,11 @@
   align-items: center;
   min-width: 200px;
 }
+
+button {
+  box-shadow: 0px 0px 8px #ddd;
+}
+
+input:focus, button:focus {
+  outline: none;
+}

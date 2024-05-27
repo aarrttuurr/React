@@ -1,5 +1,7 @@
 import React, { FC, useEffect, useState } from "react";
 import { ApiData, PaginationMove } from "../types/data";
+import "../App.css";
+import "./SearchResultPagination.css";
 
 interface PaginationProps {
   data: ApiData;
@@ -23,7 +25,7 @@ const SearchResultPagination: FC<PaginationProps> = ({ data, search, setFound, p
       //const URL = `https://swapi.py4e.com/api/people/?search=${}&page=${page}`;
       const query =
         pgnCurrMove === "numb"
-          ? encodeURIComponent(`https://swapi.py4e.com/api/people/?search=${search}&page=${page}`)
+          ? `https://swapi.py4e.com/api/people/?search=${search}&page=${page}`
           : pgnCurrMove === "next"
             ? data.next
             : data.previous;
