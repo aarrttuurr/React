@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import { ApiData, PaginationMove } from "../types/data";
-import "../App.css";
+//import "../App.css";
 import "./SearchResultPagination.css";
 
 interface PaginationProps {

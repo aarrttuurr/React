@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 import SearchBar from "../components/SearchBar";
 import SearchResultsList from "../components/SearchResultList";
 import SearchResultPagination from "../components/SearchResultPagination";
-import { ApiData } from "../types/data";
+import { ApiData, ResourcesType } from "../types/data";
 
 const Home: FC = () => {
   const [resp, setResp] = useState<ApiData>({
@@ -13,6 +13,7 @@ const Home: FC = () => {
   });
   const [search, setSearch] = useState("");
   const [pageQty, setPageQty] = useState(0);
+  const [searchEntity, setSearchEntity] = useState<ResourcesType>(ResourcesType.IFilm);
 
   return (
     <div className="app">
