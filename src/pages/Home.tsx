@@ -18,7 +18,13 @@ const Home: FC = () => {
   return (
     <div className="app">
       <div className="search-bar-container">
-        <SearchBar search={search} setSearch={setSearch} setFound={setResp} setPageQty={setPageQty} />
+        <SearchBar
+          search={search}
+          searchEntity={searchEntity}
+          setSearch={setSearch}
+          setFound={setResp}
+          setPageQty={setPageQty}
+        />
         {resp && resp.results.length > 0 && <SearchResultsList data={resp.results} />}
         <SearchResultPagination data={resp} setFound={setResp} pageQty={pageQty} search={search} />
       </div>

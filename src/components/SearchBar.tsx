@@ -6,16 +6,15 @@ import { ApiData, ResourcesType } from "../types/data";
 
 interface SetFoundProps {
   search: string;
+  searchEntity: ResourcesType;
   setSearch: React.Dispatch<React.SetStateAction<string>>;
   setFound: React.Dispatch<React.SetStateAction<ApiData>>;
   setPageQty: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const SearchBar: FC<SetFoundProps> = ({ search, setSearch, setFound, setPageQty }) => {
-  //const [search, setSearch] = useState("");
-
+const SearchBar: FC<SetFoundProps> = ({ search, searchEntity, setSearch, setFound, setPageQty }) => {
   const searchForItems = async (type: ResourcesType, value: string): Promise<ApiData> => {
-    const result = await fetch(`https://swapi.py4e.com/api/${type}/?search=${value}`);
+    const result = await fetch(`https://swapi.py4e.com/api/${searchEntity}/?search=${value}`);
     return await result.json();
   };
 
