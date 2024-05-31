@@ -2,6 +2,7 @@ import { FC, useState } from "react";
 import SearchBar from "../components/SearchBar";
 import SearchResultsList from "../components/SearchResultList";
 import SearchResultPagination from "../components/SearchResultPagination";
+import SearchSwitch from "../components/SearchSwitch";
 import { ApiData, ResourcesType } from "../types/data";
 
 const Home: FC = () => {
@@ -12,6 +13,7 @@ const Home: FC = () => {
     results: [],
   });
   const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
   const [pageQty, setPageQty] = useState(0);
   const [searchEntity, setSearchEntity] = useState<ResourcesType>(ResourcesType.IFilm);
 
@@ -25,8 +27,17 @@ const Home: FC = () => {
           setFound={setResp}
           setPageQty={setPageQty}
         />
+        <SearchSwitch searchEntity={searchEntity} setSearchEntity={setSearchEntity} setPage={setPage} />
         {resp && resp.results.length > 0 && <SearchResultsList data={resp.results} />}
-        <SearchResultPagination data={resp} setFound={setResp} pageQty={pageQty} search={search} />
+        <SearchResultPagination
+          page={page}
+          setPage={setPage}
+          data={resp}
+          setFound={setResp}
+          pageQty={pageQty}
+          search={search}
+          searchEntity={searchEntity}
+        />
       </div>
     </div>
   );

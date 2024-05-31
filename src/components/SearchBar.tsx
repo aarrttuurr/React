@@ -13,7 +13,7 @@ interface SetFoundProps {
 }
 
 const SearchBar: FC<SetFoundProps> = ({ search, searchEntity, setSearch, setFound, setPageQty }) => {
-  const searchForItems = async (type: ResourcesType, value: string): Promise<ApiData> => {
+  const searchForItems = async (value: string): Promise<ApiData> => {
     const result = await fetch(`https://swapi.py4e.com/api/${searchEntity}/?search=${value}`);
     return await result.json();
   };
@@ -21,12 +21,12 @@ const SearchBar: FC<SetFoundProps> = ({ search, searchEntity, setSearch, setFoun
   useEffect(() => {
     (async () => {
       const query = encodeURIComponent(search);
-      const response = await searchForItems(ResourcesType.IPeople, query);
+      const response = await searchForItems(query);
       setFound(response);
       setPageQty(Math.ceil(response.count / 10));
       console.log(response);
     })();
-  }, [search, setFound, setPageQty]);
+  }, [search, setFound, setPageQty, searchEntity]);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();

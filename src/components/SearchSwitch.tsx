@@ -4,11 +4,13 @@ import { ResourcesType } from "../types/data";
 interface SwitchProps {
   searchEntity: ResourcesType;
   setSearchEntity: React.Dispatch<React.SetStateAction<ResourcesType>>;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const SearchSwitch: FC<SwitchProps> = ({ searchEntity, setSearchEntity }) => {
+const SearchSwitch: FC<SwitchProps> = ({ searchEntity, setSearchEntity, setPage }) => {
   const changeSelection = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchEntity(e.target.value);
+    setSearchEntity(e.target.value as ResourcesType);
+    setPage(1);
   };
 
   function enumKeys<O extends object, K extends keyof O = keyof O>(obj: O): K[] {
@@ -19,19 +21,19 @@ const SearchSwitch: FC<SwitchProps> = ({ searchEntity, setSearchEntity }) => {
     <fieldset>
       <legend>What are you looking for?</legend>
       <div>
-        {enumKeys(ResourcesType).map((_key, i) => {
+        {enumKeys(ResourcesType).map((key, i) => {
           return (
             <>
+              <label htmlFor={`entity${i + 1}`}>{ResourcesType[key]}</label>
               <input
                 type="radio"
-                id="entity1"
+                id={`entity${i + 1}`}
                 name="entity"
                 key={i + 1}
-                value={ResourcesType[_key]}
+                value={ResourcesType[key]}
                 onChange={(e) => changeSelection(e)}
-                checked={searchEntity === ResourcesType[_key]}
+                checked={searchEntity === ResourcesType[key]}
               />
-              <label htmlFor="contactChoice1">{ResourcesType[_key]}</label>
             </>
           );
         })}

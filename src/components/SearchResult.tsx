@@ -45,14 +45,12 @@ const SearchResult = (props: { item: ResEntity }) => {
         const respArrPeople = await getItemsArray<typeof item, IPeople>(item, "characters");
         const respArrStarships = await getItemsArray<typeof item, IStarship>(item, "starships");
         const respArrVehicles = await getItemsArray<typeof item, IVehicle>(item, "vehicles");
-        console.log(Object.assign(respArrPeople, respArrStarships, respArrVehicles));
         setNestedProp(Object.assign(respArrPeople, respArrStarships, respArrVehicles));
       }
       if (isPeople(item)) {
         const respArrFilms = await getItemsArray<typeof item, IFilm>(item, "films");
         const respArrSpecies = await getItemsArray<typeof item, ISpecie>(item, "species");
         const respArrVehicles = await getItemsArray<typeof item, IVehicle>(item, "vehicles");
-        console.log(Object.assign(respArrFilms, respArrSpecies, respArrVehicles));
         setNestedProp(Object.assign(respArrFilms, respArrSpecies, respArrVehicles));
       }
       if (isPlanet(item)) {
@@ -64,7 +62,6 @@ const SearchResult = (props: { item: ResEntity }) => {
         const respArrFilms = await getItemsArray<typeof item, IFilm>(item, "films");
         const respArrPeople = await getItemsArray<typeof item, IPeople>(item, "people");
         const respArrHomeworld = await getItemsArray<typeof item, IPlanet>(item, "homeworld");
-        console.log(Object.assign(respArrFilms, respArrPeople, respArrHomeworld));
         setNestedProp(Object.assign(respArrFilms, respArrPeople, respArrHomeworld));
       }
       if (isStarship(item) || isVehicle(item)) {

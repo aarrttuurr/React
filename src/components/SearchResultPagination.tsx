@@ -1,18 +1,28 @@
 import React, { FC, useEffect, useState } from "react";
-import { ApiData, PaginationMove } from "../types/data";
+import { ApiData, PaginationMove, ResourcesType } from "../types/data";
 import "./SearchResultPagination.css";
 
 interface PaginationProps {
+  page: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
   data: ApiData;
   search: string;
+  searchEntity: ResourcesType;
   setFound: React.Dispatch<React.SetStateAction<ApiData>>;
   pageQty: number;
 }
 
-const SearchResultPagination: FC<PaginationProps> = ({ data, search, setFound, pageQty }) => {
-  const [page, setPage] = useState(1);
+const SearchResultPagination: FC<PaginationProps> = ({
+  page,
+  setPage,
+  data,
+  search,
+  searchEntity,
+  setFound,
+  pageQty,
+}) => {
+  //const [page, setPage] = useState(1);
   const [pgnCurrMove, setPgnCurrMove] = useState<PaginationMove>();
-  //const [pageQty, setPageQty] = useState(Math.ceil(data.count / 10));
 
   const pageQuery = async (url: string): Promise<ApiData> => {
     const result = await fetch(url);
@@ -21,10 +31,9 @@ const SearchResultPagination: FC<PaginationProps> = ({ data, search, setFound, p
 
   useEffect(() => {
     (async () => {
-      //const URL = `https://swapi.py4e.com/api/people/?search=${}&page=${page}`;
       const query =
         pgnCurrMove === "numb"
-          ? `https://swapi.py4e.com/api/people/?search=${search}&page=${page}`
+          ? `https://swapi.py4e.com/api/${searchEntity}/?search=${search}&page=${page}`
           : pgnCurrMove === "next"
             ? data.next
             : data.previous;
@@ -32,7 +41,7 @@ const SearchResultPagination: FC<PaginationProps> = ({ data, search, setFound, p
       setFound(response);
       console.log(response);
     })();
-  }, [page]);
+  }, [page, search, searchEntity]);
 
   const handleNextPageClick = () => {
     if (data.next) {
@@ -60,7 +69,6 @@ const SearchResultPagination: FC<PaginationProps> = ({ data, search, setFound, p
       <button className="search-prev-btn" onClick={() => handlePrevPageClick()}>
         {"⬅"}
       </button>
-      {/* <button className="search-pgnum-btn">{pageQty}</button> */}
       {[...Array(pageQty)].map((_, i) => (
         <button
           className={`search-pgnum-btn ${page === i + 1 ? "selected" : ""}`}
