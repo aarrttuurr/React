@@ -23,18 +23,19 @@ const SearchSwitch: FC<SwitchProps> = ({ searchEntity, setSearchEntity, setPage 
       <div>
         {enumKeys(ResourcesType).map((key, i) => {
           return (
-            <>
-              <label htmlFor={`entity${i + 1}`}>{ResourcesType[key]}</label>
+            <label htmlFor={`entity${i + 1}`} className="entityInputLabel" key={`entityInpLabel${i + 1}`}>
               <input
                 type="radio"
+                className="entityInput"
                 id={`entity${i + 1}`}
                 name="entity"
-                key={i + 1}
+                key={`entityInp${i + 1}`}
                 value={ResourcesType[key]}
                 onChange={(e) => changeSelection(e)}
                 checked={searchEntity === ResourcesType[key]}
               />
-            </>
+              {ResourcesType[key]}
+            </label>
           );
         })}
       </div>
