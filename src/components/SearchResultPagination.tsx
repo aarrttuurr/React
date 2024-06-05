@@ -39,7 +39,8 @@ const SearchResultPagination: FC<PaginationProps> = ({
             : data.previous;
       const response = await pageQuery(query);
       setFound(response);
-      console.log(response);
+      console.log("pageQty from pagination: ", pageQty);
+      console.log("resp from pagination: ", response);
     })();
   }, [page, search, searchEntity]);
 

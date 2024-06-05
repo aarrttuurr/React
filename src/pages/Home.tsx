@@ -26,6 +26,9 @@ const Home: FC = () => {
           setSearch={setSearch}
           setFound={setResp}
           setPageQty={setPageQty}
+          pageQty={pageQty}
+          //setPage={setPage}
+          page={page}
         />
         <SearchSwitch searchEntity={searchEntity} setSearchEntity={setSearchEntity} setPage={setPage} />
         {resp && resp.results.length > 0 && <SearchResultsList data={resp.results} />}

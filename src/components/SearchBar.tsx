@@ -10,9 +10,21 @@ interface SetFoundProps {
   setSearch: React.Dispatch<React.SetStateAction<string>>;
   setFound: React.Dispatch<React.SetStateAction<ApiData>>;
   setPageQty: React.Dispatch<React.SetStateAction<number>>;
+  pageQty: number;
+  //setPage: React.Dispatch<React.SetStateAction<number>>;
+  page: number;
 }
 
-const SearchBar: FC<SetFoundProps> = ({ search, searchEntity, setSearch, setFound, setPageQty }) => {
+const SearchBar: FC<SetFoundProps> = ({
+  search,
+  searchEntity,
+  setSearch,
+  setFound,
+  setPageQty,
+  pageQty,
+  //setPage,
+  page,
+}) => {
   const searchForItems = async (value: string): Promise<ApiData> => {
     const result = await fetch(`https://swapi.py4e.com/api/${searchEntity}/?search=${value}`);
     return await result.json();
@@ -24,7 +36,10 @@ const SearchBar: FC<SetFoundProps> = ({ search, searchEntity, setSearch, setFoun
       const response = await searchForItems(query);
       setFound(response);
       setPageQty(Math.ceil(response.count / 10));
-      console.log(response);
+      //setPage(1);
+      console.log("resp from searchbar: ", response);
+      console.log("pageQty: ", pageQty);
+      console.log("page:", page);
     })();
   }, [search, setFound, setPageQty, searchEntity]);
 
