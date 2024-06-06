@@ -27,7 +27,7 @@ const Home: FC = () => {
           setFound={setResp}
           setPageQty={setPageQty}
           pageQty={pageQty}
-          //setPage={setPage}
+          setPage={setPage}
           page={page}
         />
         <SearchSwitch searchEntity={searchEntity} setSearchEntity={setSearchEntity} setPage={setPage} />

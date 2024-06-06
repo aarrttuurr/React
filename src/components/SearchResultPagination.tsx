@@ -1,5 +1,5 @@
-import React, { FC, useEffect, useState } from "react";
-import { ApiData, PaginationMove, ResourcesType } from "../types/data";
+import React, { FC /* , useEffect, useState */ } from "react";
+import { ApiData, /* PaginationMove, */ ResourcesType } from "../types/data";
 import "./SearchResultPagination.css";
 
 interface PaginationProps {
@@ -16,15 +16,15 @@ const SearchResultPagination: FC<PaginationProps> = ({
   page,
   setPage,
   data,
-  search,
-  searchEntity,
-  setFound,
+  //search,
+  //searchEntity,
+  //setFound,
   pageQty,
 }) => {
   //const [page, setPage] = useState(1);
-  const [pgnCurrMove, setPgnCurrMove] = useState<PaginationMove>();
+  //const [pgnCurrMove, setPgnCurrMove] = useState<PaginationMove>();
 
-  const pageQuery = async (url: string): Promise<ApiData> => {
+  /* const pageQuery = async (url: string): Promise<ApiData> => {
     const result = await fetch(url);
     return await result.json();
   };
@@ -42,26 +42,26 @@ const SearchResultPagination: FC<PaginationProps> = ({
       console.log("pageQty from pagination: ", pageQty);
       console.log("resp from pagination: ", response);
     })();
-  }, [page, search, searchEntity]);
+  }, [page, search, searchEntity]); */
 
   const handleNextPageClick = () => {
     if (data.next) {
       setPage(page + 1);
-      setPgnCurrMove(PaginationMove.Next);
+      //setPgnCurrMove(PaginationMove.Next);
     }
   };
 
   const handlePrevPageClick = () => {
     if (data.previous) {
       setPage(page - 1);
-      setPgnCurrMove(PaginationMove.Prev);
+      //setPgnCurrMove(PaginationMove.Prev);
     }
   };
 
   const handlePageChange = (pageNumber: number) => {
     if (pageNumber > 0 && pageNumber <= pageQty && pageNumber !== page) {
       setPage(pageNumber);
-      setPgnCurrMove(PaginationMove.Numb);
+      //setPgnCurrMove(PaginationMove.Numb);
     }
   };
 

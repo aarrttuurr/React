@@ -11,7 +11,7 @@ interface SetFoundProps {
   setFound: React.Dispatch<React.SetStateAction<ApiData>>;
   setPageQty: React.Dispatch<React.SetStateAction<number>>;
   pageQty: number;
-  //setPage: React.Dispatch<React.SetStateAction<number>>;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
   page: number;
 }
 
@@ -22,11 +22,11 @@ const SearchBar: FC<SetFoundProps> = ({
   setFound,
   setPageQty,
   pageQty,
-  //setPage,
+  setPage,
   page,
 }) => {
   const searchForItems = async (value: string): Promise<ApiData> => {
-    const result = await fetch(`https://swapi.py4e.com/api/${searchEntity}/?search=${value}`);
+    const result = await fetch(`https://swapi.py4e.com/api/${searchEntity}/?search=${value}&page=${page}`);
     return await result.json();
   };
 
@@ -38,10 +38,14 @@ const SearchBar: FC<SetFoundProps> = ({
       setPageQty(Math.ceil(response.count / 10));
       //setPage(1);
       console.log("resp from searchbar: ", response);
-      console.log("pageQty: ", pageQty);
-      console.log("page:", page);
+      console.log("pageQty from searchbar: ", pageQty);
+      console.log("page from searchbar: ", page);
     })();
-  }, [search, setFound, setPageQty, searchEntity]);
+  }, [search, setFound, setPageQty, searchEntity, page]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [setSearch]);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
