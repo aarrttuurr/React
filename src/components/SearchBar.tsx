@@ -25,8 +25,10 @@ const SearchBar: FC<SetFoundProps> = ({
   setPage,
   page,
 }) => {
-  const searchForItems = async (value: string): Promise<ApiData> => {
-    const result = await fetch(`https://swapi.py4e.com/api/${searchEntity}/?search=${value}&page=${page}`);
+  const searchForItems = async (value: string, withPage?: boolean): Promise<ApiData> => {
+    const result = await fetch(
+      `https://swapi.py4e.com/api/${searchEntity}/?search=${value + (withPage && `&page=${page}`)}`
+    );
     return await result.json();
   };
 
@@ -34,18 +36,23 @@ const SearchBar: FC<SetFoundProps> = ({
     (async () => {
       const query = encodeURIComponent(search);
       const response = await searchForItems(query);
-      setFound(response);
       setPageQty(Math.ceil(response.count / 10));
+      setPage(1);
+      setFound(response);
       //setPage(1);
       console.log("resp from searchbar: ", response);
       console.log("pageQty from searchbar: ", pageQty);
       console.log("page from searchbar: ", page);
     })();
-  }, [search, setFound, setPageQty, searchEntity, page]);
+  }, [search]);
 
   useEffect(() => {
-    setPage(1);
-  }, [setSearch]);
+    (async () => {
+      const query = encodeURIComponent(search);
+      const response = await searchForItems(query, true);
+      setFound(response);
+    })();
+  }, [setPage]);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
