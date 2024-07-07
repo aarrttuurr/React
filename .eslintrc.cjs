@@ -22,7 +22,7 @@ module.exports = {
     'ecmaVersion': 'latest',
     'sourceType': 'module'
   },
-  plugins: ['@typescript-eslint', 'react', 'react-hooks', 'react-refresh', 'prettier'],
+  plugins: ['@typescript-eslint', 'react', 'react-hooks', 'react-refresh', 'prettier', 'react-compiler'],
   rules: {
     'react-refresh/only-export-components': [
       'warn',
@@ -41,7 +41,8 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'error',
     '@typescript-eslint/no-var-requires': 'off',
     'react/jsx-uses-react': 'off',
-    'react/react-in-jsx-scope': 'off'
+    'react/react-in-jsx-scope': 'off',
+    'react-compiler/react-compiler': 'error'
   },
   settings: {
     'react': {

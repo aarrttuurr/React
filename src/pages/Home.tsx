@@ -26,7 +26,6 @@ const Home: FC = () => {
           setSearch={setSearch}
           setFound={setResp}
           setPageQty={setPageQty}
-          pageQty={pageQty}
           setPage={setPage}
           page={page}
         />

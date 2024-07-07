@@ -1,8 +1,8 @@
-import React, { FC /* , useEffect, useState */ } from "react";
-import { ApiData, /* PaginationMove, */ ResourcesType } from "../types/data";
+import React, { Component } from "react";
+import { ApiData, ResourcesType } from "../types/data";
 import "./SearchResultPagination.css";
 
-interface PaginationProps {
+type PaginationProps = {
   page: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
   data: ApiData;
@@ -10,58 +10,66 @@ interface PaginationProps {
   searchEntity: ResourcesType;
   setFound: React.Dispatch<React.SetStateAction<ApiData>>;
   pageQty: number;
+};
+
+class SearchResultPagination extends Component<PaginationProps> {
+  handleNextPageClick() {
+    if (this.props.data.next) {
+      this.props.setPage(this.props.page + 1);
+    }
+  }
+
+  handlePrevPageClick() {
+    if (this.props.data.previous) {
+      this.props.setPage(this.props.page - 1);
+    }
+  }
+
+  handlePageChange(pageNumber: number) {
+    if (pageNumber > 0 && pageNumber <= this.props.pageQty && pageNumber !== this.props.page) {
+      this.props.setPage(pageNumber);
+    }
+  }
+
+  render() {
+    return (
+      <div className="search-pagination">
+        <button className="search-prev-btn" onClick={() => this.handlePrevPageClick()}>
+          {"⬅"}
+        </button>
+        {[...Array(this.props.pageQty)].map((_, i) => (
+          <button
+            className={`search-pgnum-btn ${this.props.page === i + 1 ? "selected" : ""}`}
+            key={i + 1}
+            onClick={() => this.handlePageChange(i + 1)}
+          >
+            {i + 1}
+          </button>
+        ))}
+        <button className="search-next-btn" onClick={() => this.handleNextPageClick()}>
+          {"➡"}
+        </button>
+      </div>
+    );
+  }
 }
 
-const SearchResultPagination: FC<PaginationProps> = ({
-  page,
-  setPage,
-  data,
-  //search,
-  //searchEntity,
-  //setFound,
-  pageQty,
-}) => {
-  //const [page, setPage] = useState(1);
-  //const [pgnCurrMove, setPgnCurrMove] = useState<PaginationMove>();
-
-  /* const pageQuery = async (url: string): Promise<ApiData> => {
-    const result = await fetch(url);
-    return await result.json();
-  };
-
-  useEffect(() => {
-    (async () => {
-      const query =
-        pgnCurrMove === "numb"
-          ? `https://swapi.py4e.com/api/${searchEntity}/?search=${search}&page=${page}`
-          : pgnCurrMove === "next"
-            ? data.next
-            : data.previous;
-      const response = await pageQuery(query);
-      setFound(response);
-      console.log("pageQty from pagination: ", pageQty);
-      console.log("resp from pagination: ", response);
-    })();
-  }, [page, search, searchEntity]); */
-
+/* const SearchResultPagination: FC<PaginationProps> = ({ page, setPage, data, pageQty }) => {
   const handleNextPageClick = () => {
     if (data.next) {
       setPage(page + 1);
-      //setPgnCurrMove(PaginationMove.Next);
     }
   };
 
   const handlePrevPageClick = () => {
     if (data.previous) {
       setPage(page - 1);
-      //setPgnCurrMove(PaginationMove.Prev);
     }
   };
 
   const handlePageChange = (pageNumber: number) => {
     if (pageNumber > 0 && pageNumber <= pageQty && pageNumber !== page) {
       setPage(pageNumber);
-      //setPgnCurrMove(PaginationMove.Numb);
     }
   };
 
@@ -84,6 +92,6 @@ const SearchResultPagination: FC<PaginationProps> = ({
       </button>
     </div>
   );
-};
+}; */
 
 export default SearchResultPagination;
