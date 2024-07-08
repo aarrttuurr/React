@@ -1,10 +1,10 @@
-import React, { ChangeEvent, Component } from "react";
+import { ChangeEvent, Component } from "react";
 import { ResourcesType } from "../types/data";
 
 type SwitchProps = {
   searchEntity: ResourcesType;
-  setSearchEntity: React.Dispatch<React.SetStateAction<ResourcesType>>;
-  setPage: React.Dispatch<React.SetStateAction<number>>;
+  setSearchEntity: (value: ResourcesType) => void;
+  setPage: (value: number) => void;
 };
 
 class SearchSwitch extends Component<SwitchProps> {
@@ -45,7 +45,14 @@ class SearchSwitch extends Component<SwitchProps> {
   }
 }
 
-/* const SearchSwitch: FC<SwitchProps> = ({ searchEntity, setSearchEntity, setPage }) => {
+/*
+type SwitchProps = {
+  searchEntity: ResourcesType;
+  setSearchEntity: React.Dispatch<React.SetStateAction<ResourcesType>>;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+};
+
+const SearchSwitch: FC<SwitchProps> = ({ searchEntity, setSearchEntity, setPage }) => {
   const changeSelection = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchEntity(e.target.value as ResourcesType);
     setPage(1);

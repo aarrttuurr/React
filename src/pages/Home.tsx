@@ -11,9 +11,9 @@ type HomeState = {
   page: number;
   pageQty: number;
   searchEntity: ResourcesType;
-}
+};
 
-class Home2 extends Component<{}, HomeState> {
+class Home extends Component<unknown, HomeState> {
   state: HomeState = {
     resp: {
       count: 0,
@@ -25,10 +25,26 @@ class Home2 extends Component<{}, HomeState> {
     page: 1,
     pageQty: 0,
     searchEntity: ResourcesType.IFilm,
+  };
+
+  setSearch = (value: string) => {
+    this.setState({ search: value });
   }
 
-  setSearch(value: string) {
-    this.setState({search: value});
+  setResp = (value: ApiData) => {
+    this.setState({ resp: value });
+  }
+
+  setPageQty = (value: number) => {
+    this.setState({ pageQty: value });
+  }
+
+  setPage = (value: number) => {
+    this.setState({ page: value });
+  }
+
+  setSearchEntity = (value: ResourcesType) => {
+    this.setState({ searchEntity: value });
   }
 
   render() {
@@ -39,18 +55,22 @@ class Home2 extends Component<{}, HomeState> {
             search={this.state.search}
             searchEntity={this.state.searchEntity}
             setSearch={this.setSearch}
-            setFound={setResp}
-            setPageQty={setPageQty}
-            setPage={setPage}
+            setFound={this.setResp}
+            setPageQty={this.setPageQty}
+            setPage={this.setPage}
             page={this.state.page}
           />
-          <SearchSwitch searchEntity={this.state.searchEntity} setSearchEntity={setSearchEntity} setPage={setPage} />
+          <SearchSwitch
+            searchEntity={this.state.searchEntity}
+            setSearchEntity={this.setSearchEntity}
+            setPage={this.setPage}
+          />
           {this.state.resp && this.state.resp.results.length > 0 && <SearchResultsList data={this.state.resp.results} />}
           <SearchResultPagination
             page={this.state.page}
-            setPage={setPage}
+            setPage={this.setPage}
             data={this.state.resp}
-            setFound={setResp}
+            setFound={this.setResp}
             pageQty={this.state.pageQty}
             search={this.state.search}
             searchEntity={this.state.searchEntity}
@@ -61,7 +81,7 @@ class Home2 extends Component<{}, HomeState> {
   }
 }
 
-const Home: FC = () => {
+/* const Home: FC = () => {
   const [resp, setResp] = useState<ApiData>({
     count: 0,
     next: "",
@@ -99,6 +119,6 @@ const Home: FC = () => {
       </div>
     </div>
   );
-};
+}; */
 
 export default Home;

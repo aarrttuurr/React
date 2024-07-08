@@ -7,10 +7,10 @@ import { ApiData, ResourcesType } from "../types/data";
 type SetFoundProps = {
   search: string;
   searchEntity: ResourcesType;
-  setSearch: React.Dispatch<React.SetStateAction<string>>;
-  setFound: React.Dispatch<React.SetStateAction<ApiData>>;
-  setPageQty: React.Dispatch<React.SetStateAction<number>>;
-  setPage: React.Dispatch<React.SetStateAction<number>>;
+  setSearch: (value: string) => void;
+  setFound: (value: ApiData) => void;
+  setPageQty: (value: number) => void;
+  setPage: (value: number) => void;
   page: number;
 };
 
@@ -68,7 +68,18 @@ class SearchBar extends Component<SetFoundProps> {
   }
 }
 
-/* const SearchBar: FC<SetFoundProps> = ({ search, searchEntity, setSearch, setFound, setPageQty, setPage, page }) => {
+/*
+type SetFoundProps = {
+  search: string;
+  searchEntity: ResourcesType;
+  setSearch: React.Dispatch<React.SetStateAction<string>>;
+  setFound: React.Dispatch<React.SetStateAction<ApiData>>;
+  setPageQty: React.Dispatch<React.SetStateAction<number>>;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+  page: number;
+};
+
+const SearchBar: FC<SetFoundProps> = ({ search, searchEntity, setSearch, setFound, setPageQty, setPage, page }) => {
   const searchForItems = async (value: string, withPage?: boolean): Promise<ApiData> => {
     const result = await fetch(
       withPage

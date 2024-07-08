@@ -1,6 +1,6 @@
-import "./SearchResult.css";
 import { Component } from "react";
 import { IFilm, IPeople, IPlanet, ISpecie, ResEntity, IStarship, IVehicle, StateEntities } from "../types/data";
+import "./SearchResult.css";
 
 class SearchResult extends Component<{ item: ResEntity }, { nestedProp: StateEntities }> {
   isFilm = (value: ResEntity): value is IFilm => "title" in value;
@@ -30,7 +30,7 @@ class SearchResult extends Component<{ item: ResEntity }, { nestedProp: StateEnt
   }
 
   setNestedProp(respObj: StateEntities) {
-    this.setState({nestedProp: respObj});
+    this.setState({ nestedProp: respObj });
   }
 
   async nestedPropRequester() {

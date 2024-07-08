@@ -4,11 +4,11 @@ import "./SearchResultPagination.css";
 
 type PaginationProps = {
   page: number;
-  setPage: React.Dispatch<React.SetStateAction<number>>;
+  setPage: (value: number) => void;
+  setFound: (value: ApiData) => void;
   data: ApiData;
   search: string;
   searchEntity: ResourcesType;
-  setFound: React.Dispatch<React.SetStateAction<ApiData>>;
   pageQty: number;
 };
 
@@ -54,7 +54,17 @@ class SearchResultPagination extends Component<PaginationProps> {
   }
 }
 
-/* const SearchResultPagination: FC<PaginationProps> = ({ page, setPage, data, pageQty }) => {
+/*type PaginationProps = {
+  page: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+  data: ApiData;
+  search: string;
+  searchEntity: ResourcesType;
+  setFound: React.Dispatch<React.SetStateAction<ApiData>>;
+  pageQty: number;
+};
+
+const SearchResultPagination: FC<PaginationProps> = ({ page, setPage, data, pageQty }) => {
   const handleNextPageClick = () => {
     if (data.next) {
       setPage(page + 1);
