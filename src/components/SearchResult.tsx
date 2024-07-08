@@ -3,8 +3,6 @@ import { Component } from "react";
 import { IFilm, IPeople, IPlanet, ISpecie, ResEntity, IStarship, IVehicle, StateEntities } from "../types/data";
 
 class SearchResult extends Component<{ item: ResEntity }, { nestedProp: StateEntities }> {
-  //state = { nestedProp: {}};
-
   isFilm = (value: ResEntity): value is IFilm => "title" in value;
 
   isPeople = (value: ResEntity): value is IPeople => "birth_year" in value;
