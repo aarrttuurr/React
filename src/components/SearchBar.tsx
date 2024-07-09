@@ -49,17 +49,22 @@ class SearchBar extends Component<SetFoundProps> {
     }
   }
 
+  /* componentWillUnmount(): void {
+    localStorage.setItem("search-term", this.props.search);
+  } */
+
   handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = event.target as HTMLFormElement;
     const input = form.querySelector(".search-input") as HTMLInputElement;
     this.props.setSearch(input.value);
+    localStorage.setItem("search-term", input.value);
   }
 
   render() {
     return (
       <form className="search-form" onSubmit={(e) => this.handleSubmit(e)}>
-        <input className="search-input" placeholder="Type to search..." />
+        <input className="search-input" placeholder="Type to search..." defaultValue={this.props.search} />
         <button>
           <FaSearch id="search-icon" />
         </button>

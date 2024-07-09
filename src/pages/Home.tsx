@@ -1,4 +1,4 @@
-import { FC, useState, Component } from "react";
+import { Component } from "react";
 import SearchBar from "../components/SearchBar";
 import SearchResultsList from "../components/SearchResultList";
 import SearchResultPagination from "../components/SearchResultPagination";
@@ -21,31 +21,34 @@ class Home extends Component<unknown, HomeState> {
       previous: "",
       results: [],
     },
-    search: "",
+    search: localStorage.getItem("search-term") !== null ? (localStorage.getItem("search-term") as string) : "",
     page: 1,
     pageQty: 0,
-    searchEntity: ResourcesType.IFilm,
+    searchEntity:
+      localStorage.getItem("search-group") !== null
+        ? (localStorage.getItem("search-group") as ResourcesType)
+        : ResourcesType.IFilm,
   };
 
   setSearch = (value: string) => {
     this.setState({ search: value });
-  }
+  };
 
   setResp = (value: ApiData) => {
     this.setState({ resp: value });
-  }
+  };
 
   setPageQty = (value: number) => {
     this.setState({ pageQty: value });
-  }
+  };
 
   setPage = (value: number) => {
     this.setState({ page: value });
-  }
+  };
 
   setSearchEntity = (value: ResourcesType) => {
     this.setState({ searchEntity: value });
-  }
+  };
 
   render() {
     return (

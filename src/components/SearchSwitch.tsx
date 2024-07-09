@@ -1,5 +1,6 @@
 import { ChangeEvent, Component } from "react";
 import { ResourcesType } from "../types/data";
+import "./SearchSwitch.css";
 
 type SwitchProps = {
   searchEntity: ResourcesType;
@@ -11,6 +12,7 @@ class SearchSwitch extends Component<SwitchProps> {
   changeSelection(e: ChangeEvent<HTMLInputElement>) {
     this.props.setSearchEntity(e.target.value as ResourcesType);
     this.props.setPage(1);
+    localStorage.setItem("search-group", e.target.value as ResourcesType);
   }
 
   enumKeys<O extends object, K extends keyof O = keyof O>(obj: O): K[] {
@@ -19,15 +21,15 @@ class SearchSwitch extends Component<SwitchProps> {
 
   render() {
     return (
-      <fieldset>
-        <legend>What are you looking for?</legend>
-        <div>
+      <fieldset className="entity-fieldset">
+        <legend className="entity-legend">What are you looking for?</legend>
+        <div className="entity-input-container">
           {this.enumKeys(ResourcesType).map((key, i) => {
             return (
-              <label htmlFor={`entity${i + 1}`} className="entityInputLabel" key={`entityInpLabel${i + 1}`}>
+              <label htmlFor={`entity${i + 1}`} className="entity-input-label" key={`entityInpLabel${i + 1}`}>
                 <input
                   type="radio"
-                  className="entityInput"
+                  className="entity-input"
                   id={`entity${i + 1}`}
                   name="entity"
                   key={`entityInp${i + 1}`}
