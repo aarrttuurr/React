@@ -1,0 +1,32 @@
+.entity-fieldset {
+  border: none;
+  width: 100%;
+  padding: 1rem;
+  margin-block: 1rem;
+}
+
+.entity-legend {
+  font-weight: bold;
+}
+
+.entity-input {
+  display: none;
+}
+
+.entity-input-label {
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.entity-input-label:has(.entity-input:checked) {
+  background-color: #f9f9f9;
+  color: tomato;
+  box-shadow: 0px 0px 8px #ddd;
+  border-radius: 10px;
+}
+
+.entity-input-container {
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+}
