@@ -1,0 +1,39 @@
+/* .search-spinner {
+  animation: rotation 1s infinite linear;
+
+}
+
+@keyframes rotation {
+  from {
+      transform: rotate(0deg);
+  }
+  to {
+      transform: rotate(360deg);
+  }
+} */
+
+.search-spinner-wrapper {
+  height: 50vh;
+}
+
+.search-spinner {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  top: 50%;
+  border: 10px solid;
+  border-color: rgba(200, 200, 200, 0.15) rgba(200, 200, 200, 0.25) rgba(200, 200, 200, 0.35) rgba(200, 200, 200, 0.5);
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+} 
