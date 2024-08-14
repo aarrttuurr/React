@@ -1,4 +1,5 @@
 import { FC, FormEvent, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 import "./SearchBar.css";
 import "../App.css";
@@ -25,6 +26,8 @@ const SearchBar: FC<SetFoundProps> = ({
   page,
   setIsLoading,
 }) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  //const postQuery = searchParams.get
   const searchForItems = async (value: string, withPage?: boolean): Promise<ApiData> => {
     const result = await fetch(
       withPage
@@ -55,14 +58,15 @@ const SearchBar: FC<SetFoundProps> = ({
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.target as HTMLFormElement;
-    const input = form.querySelector(".search-input") as HTMLInputElement;
-    setSearch(input.value);
-    localStorage.setItem("search-term", input.value);
+    //const input = form.querySelector(".search-input") as HTMLInputElement;
+    setSearch(form.search.value);
+    setSearchParams({ search: form.search.value });
+    localStorage.setItem("search-term", form.search.value);
   };
 
   return (
-    <form className="search-form" onSubmit={(e) => handleSubmit(e)}>
-      <input className="search-input" placeholder="Type to search..." defaultValue={search} />
+    <form className="search-form" autoComplete="off" onSubmit={handleSubmit}>
+      <input className="search-input" type="search" name="search" placeholder="Type to search..." defaultValue={search} />
       <button>
         <FaSearch id="search-icon" />
       </button>
