@@ -6,8 +6,11 @@ import "./App.css";
 export function App() {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="*" element={<NotFound />} />
+      <Route path="/" element={<Home />}>
+        <Route path="searcher" element={<Home />} />
+        <Route path="searcher/:entitys" element={<Home />} />
+        <Route path="*" element={<NotFound />} />
+      </Route>
     </Routes>
   );
 }

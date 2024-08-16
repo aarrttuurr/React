@@ -1,6 +1,7 @@
 import { ChangeEvent, FC } from "react";
 import { ResourcesType } from "../types/data";
 import "./SearchSwitch.css";
+import { useParams } from "react-router-dom";
 
 type SwitchProps = {
   searchEntity: ResourcesType;
@@ -9,10 +10,15 @@ type SwitchProps = {
 };
 
 const SearchSwitch: FC<SwitchProps> = ({ searchEntity, setSearchEntity, setPage }) => {
+  // const navigate = useNavigate();
+  let { entitys } = useParams();
+
   const changeSelection = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchEntity(e.target.value as ResourcesType);
+    const newEntity = e.target.value as ResourcesType;
+    setSearchEntity(newEntity);
     setPage(1);
-    localStorage.setItem("search-group", e.target.value as ResourcesType);
+    // navigate(":newEntity");
+    localStorage.setItem("search-group", newEntity);
   };
 
   function enumKeys<O extends object, K extends keyof O = keyof O>(obj: O): K[] {
