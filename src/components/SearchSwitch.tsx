@@ -1,7 +1,7 @@
 import { ChangeEvent, FC } from "react";
 import { ResourcesType } from "../types/data";
 import "./SearchSwitch.css";
-import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 type SwitchProps = {
   searchEntity: ResourcesType;
@@ -10,14 +10,14 @@ type SwitchProps = {
 };
 
 const SearchSwitch: FC<SwitchProps> = ({ searchEntity, setSearchEntity, setPage }) => {
-  // const navigate = useNavigate();
-  let { entitys } = useParams();
+  const navigate = useNavigate();
+  // let { entitys } = useParams();
 
   const changeSelection = (e: ChangeEvent<HTMLInputElement>) => {
     const newEntity = e.target.value as ResourcesType;
     setSearchEntity(newEntity);
     setPage(1);
-    // navigate(":newEntity");
+    navigate(`${newEntity}`);
     localStorage.setItem("search-group", newEntity);
   };
 

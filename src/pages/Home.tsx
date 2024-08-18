@@ -5,6 +5,7 @@ import SearchResultPagination from "../components/SearchResultPagination";
 import SearchSwitch from "../components/SearchSwitch";
 import { ApiData, ResourcesType } from "../types/data";
 import SearchLoader from "../components/SearchLoader";
+import { useSearchParams } from "react-router-dom";
 
 const Home: FC = () => {
   const [resp, setResp] = useState<ApiData>({
@@ -24,6 +25,7 @@ const Home: FC = () => {
       : ResourcesType.IFilm
   );
   const [isLoading, setIsLoading] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   return (
     <div className="app">
@@ -37,6 +39,7 @@ const Home: FC = () => {
           setPage={setPage}
           page={page}
           setIsLoading={setIsLoading}
+          setSearchParams={setSearchParams}
         />
         <SearchSwitch searchEntity={searchEntity} setSearchEntity={setSearchEntity} setPage={setPage} />
         {/*resp && resp.count > 0 && !isLoading ? <SearchResultsList data={resp.results} /> : <SearchLoader />*/}

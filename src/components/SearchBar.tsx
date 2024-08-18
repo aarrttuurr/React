@@ -14,6 +14,7 @@ type SetFoundProps = {
   setPage: React.Dispatch<React.SetStateAction<number>>;
   page: number;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  setSearchParams:;
 };
 
 const SearchBar: FC<SetFoundProps> = ({
