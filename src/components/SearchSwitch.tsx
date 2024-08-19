@@ -7,17 +7,20 @@ type SwitchProps = {
   searchEntity: ResourcesType;
   setSearchEntity: React.Dispatch<React.SetStateAction<ResourcesType>>;
   setPage: React.Dispatch<React.SetStateAction<number>>;
+  searchParams: URLSearchParams;
 };
 
-const SearchSwitch: FC<SwitchProps> = ({ searchEntity, setSearchEntity, setPage }) => {
+const SearchSwitch: FC<SwitchProps> = ({ searchEntity, setSearchEntity, setPage, searchParams }) => {
   const navigate = useNavigate();
-  // let { entitys } = useParams();
 
   const changeSelection = (e: ChangeEvent<HTMLInputElement>) => {
     const newEntity = e.target.value as ResourcesType;
     setSearchEntity(newEntity);
     setPage(1);
-    navigate(`${newEntity}`);
+    navigate({
+      pathname: `${newEntity}`,
+      search: `${searchParams}`,
+    });
     localStorage.setItem("search-group", newEntity);
   };
 

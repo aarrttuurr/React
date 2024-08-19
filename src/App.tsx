@@ -8,7 +8,7 @@ export function App() {
     <Routes>
       <Route path="/" element={<Home />}>
         <Route path="searcher" element={<Home />} />
-        <Route path="searcher/:entitys" element={<Home />} />
+        <Route path="searcher/:entity" element={<Home />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

@@ -41,7 +41,12 @@ const Home: FC = () => {
           setIsLoading={setIsLoading}
           setSearchParams={setSearchParams}
         />
-        <SearchSwitch searchEntity={searchEntity} setSearchEntity={setSearchEntity} setPage={setPage} />
+        <SearchSwitch
+          searchEntity={searchEntity}
+          setSearchEntity={setSearchEntity}
+          setPage={setPage}
+          searchParams={searchParams}
+        />
         {/*resp && resp.count > 0 && !isLoading ? <SearchResultsList data={resp.results} /> : <SearchLoader />*/}
         {!isLoading ? (
           resp && resp.count > 0 ? (

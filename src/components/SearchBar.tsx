@@ -1,5 +1,5 @@
 import { FC, FormEvent, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { SetURLSearchParams } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 import "./SearchBar.css";
 import "../App.css";
@@ -14,7 +14,7 @@ type SetFoundProps = {
   setPage: React.Dispatch<React.SetStateAction<number>>;
   page: number;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
-  setSearchParams:;
+  setSearchParams: SetURLSearchParams;
 };
 
 const SearchBar: FC<SetFoundProps> = ({
@@ -26,9 +26,8 @@ const SearchBar: FC<SetFoundProps> = ({
   setPage,
   page,
   setIsLoading,
+  setSearchParams,
 }) => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  //const postQuery = searchParams.get
   const searchForItems = async (value: string, withPage?: boolean): Promise<ApiData> => {
     const result = await fetch(
       withPage
