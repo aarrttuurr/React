@@ -1,0 +1,14 @@
+.search-pagination {
+  font-size: 1.25rem;
+  display: flex;
+  column-gap: 10px;
+  margin-top: 0.75rem;
+}
+
+.search-pgnum-btn:hover {
+  background-color: #f0f8ff;
+}
+
+.search-pgnum-btn.selected {
+  background-color: #d7ecff;
+}
